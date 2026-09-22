@@ -1,0 +1,5722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HACKFEST | Hackathon</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#05070d;
+    color:#ffffff;
+    overflow-x:hidden;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button{
+    font-family:inherit;
+}
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+:root{
+    --cyan:#00eaff;
+    --blue:#4267ff;
+    --purple:#9b5cff;
+    --pink:#ff3cac;
+    --dark:#05070d;
+    --card:rgba(255,255,255,0.055);
+    --border:rgba(255,255,255,0.12);
+    --muted:#a8afc1;
+}
+
+/* ========================================= HACKFEST INTRO SCREEN ========================================= */ #introScreen { position: fixed; inset: 0; width: 100%; height: 100vh; height: 100dvh; z-index: 999999; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #03050b; color: white; font-family: Inter, Arial, Helvetica, sans-serif; transition: opacity 0.8s ease, visibility 0.8s ease; } /* ========================================= BACKGROUND ========================================= */ .intro-bg { position: absolute; inset: 0; background: radial-gradient( circle at 50% 45%, rgba(0, 210, 255, 0.10), transparent 30% ), radial-gradient( circle at 20% 80%, rgba(150, 60, 255, 0.10), transparent 30% ), radial-gradient( circle at 85% 20%, rgba(255, 50, 150, 0.08), transparent 30% ); z-index: 0; } /* ========================================= GRID ========================================= */ .intro-grid { position: absolute; inset: -50%; background-image: linear-gradient( rgba(0, 220, 255, 0.055) 1px, transparent 1px ), linear-gradient( 90deg, rgba(0, 220, 255, 0.055) 1px, transparent 1px ); background-size: 60px 60px; transform: perspective(500px) rotateX(65deg); transform-origin: center bottom; animation: introGridMove 12s linear infinite; opacity: 0.55; z-index: 1; } @keyframes introGridMove { from { transform: perspective(500px) rotateX(65deg) translateY(0); } to { transform: perspective(500px) rotateX(65deg) translateY(60px); } } /* ========================================= GLOWING ORBS ========================================= */ .intro-orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35; z-index: 1; pointer-events: none; } .intro-orb-1 { width: 280px; height: 280px; top: -100px; left: -80px; background: #00d9ff; animation: introOrb1 8s ease-in-out infinite alternate; } .intro-orb-2 { width: 320px; height: 320px; right: -100px; bottom: -120px; background: #8c35ff; animation: introOrb2 10s ease-in-out infinite alternate; } .intro-orb-3 { width: 220px; height: 220px; right: 15%; top: 10%; background: #ff3d9a; opacity: 0.18; animation: introOrb3 7s ease-in-out infinite alternate; } @keyframes introOrb1 { from { transform: translate(0, 0); } to { transform: translate(100px, 80px); } } @keyframes introOrb2 { from { transform: translate(0, 0); } to { transform: translate(-100px, -80px); } } @keyframes introOrb3 { from { transform: translate(0, 0); } to { transform: translate(-60px, 80px); } } /* ========================================= PARTICLES ========================================= */ .intro-particles { position: absolute; inset: 0; z-index: 2; pointer-events: none; } .intro-particles span { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.75); box-shadow: 0 0 10px rgba(255,255,255,0.7); animation: introParticle 5s linear infinite; } /* Different positions */ .intro-particles span:nth-child(1) { left: 8%; top: 20%; animation-delay: 0s; } .intro-particles span:nth-child(2) { left: 18%; top: 75%; animation-delay: 1s; } .intro-particles span:nth-child(3) { left: 30%; top: 15%; animation-delay: 2s; } .intro-particles span:nth-child(4) { left: 42%; top: 82%; animation-delay: 0.5s; } .intro-particles span:nth-child(5) { left: 55%; top: 10%; animation-delay: 1.5s; } .intro-particles span:nth-child(6) { left: 65%; top: 72%; animation-delay: 2.5s; } .intro-particles span:nth-child(7) { left: 75%; top: 25%; animation-delay: 0.8s; } .intro-particles span:nth-child(8) { left: 85%; top: 65%; animation-delay: 1.8s; } .intro-particles span:nth-child(9) { left: 92%; top: 35%; animation-delay: 3s; } .intro-particles span:nth-child(10) { left: 12%; top: 48%; animation-delay: 2.2s; } .intro-particles span:nth-child(11) { left: 50%; top: 25%; animation-delay: 1.2s; } .intro-particles span:nth-child(12) { left: 72%; top: 88%; animation-delay: 2.8s; } @keyframes introParticle { 0% { transform: translateY(20px) scale(0.5); opacity: 0; } 30% { opacity: 1; } 70% { opacity: 1; } 100% { transform: translateY(-80px) scale(1); opacity: 0; } } /* ========================================= CONTENT ========================================= */ .intro-content { position: relative; z-index: 10; width: min(900px, 90%); text-align: center; display: flex; flex-direction: column; align-items: center; animation: introContentIn 1.2s ease forwards; } @keyframes introContentIn { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } } /* ========================================= WELCOME LINE ========================================= */ .intro-top-line { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 20px; } .intro-top-line span { width: 45px; height: 1px; background: linear-gradient( 90deg, transparent, rgba(0,220,255,0.8) ); } .intro-top-line span:last-child { background: linear-gradient( 90deg, rgba(0,220,255,0.8), transparent ); } .intro-top-line p { margin: 0; font-size: 11px; letter-spacing: 4px; color: rgba(255,255,255,0.55); } /* ========================================= DEPARTMENT ========================================= */ .intro-small-text { font-size: 10px; letter-spacing: 3px; color: rgba(255,255,255,0.5); margin-bottom: 13px; } /* ========================================= HACKFEST NAME ========================================= */ .intro-event-name { margin: 0; font-size: clamp(58px, 10vw, 105px); line-height: 0.95; font-weight: 900; letter-spacing: -5px; color: #ffffff; text-shadow: 0 0 15px rgba(0,220,255,0.25), 0 0 45px rgba(0,220,255,0.12); } .intro-event-name span { background: linear-gradient( 90deg, #00eaff, #7b5cff, #ff4da6 ); -webkit-background-clip: text; background-clip: text; color: transparent; } /* ========================================= UNDERLINE ========================================= */ .intro-underline { width: 150px; height: 2px; margin: 20px auto 16px; border-radius: 10px; background: linear-gradient( 90deg, transparent, #00eaff, #8c5cff, #ff4da6, transparent ); box-shadow: 0 0 18px rgba(0,220,255,0.5); animation: introLinePulse 2s ease-in-out infinite; } @keyframes introLinePulse { 0%, 100% { opacity: 0.6; transform: scaleX(0.8); } 50% { opacity: 1; transform: scaleX(1); } } /* ========================================= TAGLINE ========================================= */ .intro-tagline { margin: 0; font-size: 12px; letter-spacing: 5px; color: rgba(255,255,255,0.65); font-weight: 600; } /* ========================================= 24 HR HACKATHON ========================================= */ .intro-event-type { display: flex; align-items: center; gap: 10px; margin-top: 18px; padding: 9px 18px; border: 1px solid rgba(255,255,255,0.12); border-radius: 50px; background: rgba(255,255,255,0.04); backdrop-filter: blur(12px); } .intro-event-type span { font-size: 12px; font-weight: 900; color: #00eaff; } .intro-event-type b { font-size: 10px; letter-spacing: 2px; color: rgba(255,255,255,0.75); } /* ========================================= LOADING ========================================= */ .intro-loading { width: min(330px, 80vw); margin-top: 42px; } .loading-text { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 8px; letter-spacing: 1.5px; color: rgba(255,255,255,0.4); } .loading-bar { width: 100%; height: 3px; overflow: hidden; border-radius: 20px; background: rgba(255,255,255,0.08); } .loading-progress { width: 0%; height: 100%; border-radius: inherit; background: linear-gradient( 90deg, #00eaff, #775cff, #ff4da6 ); box-shadow: 0 0 12px rgba(0,220,255,0.7); animation: introLoading 2.8s ease forwards; } @keyframes introLoading { 0% { width: 0%; } 20% { width: 22%; } 45% { width: 48%; } 70% { width: 73%; } 90% { width: 91%; } 100% { width: 100%; } } /* ========================================= FOOTER ========================================= */ .intro-footer { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 25px; font-size: 8px; letter-spacing: 2px; color: rgba(255,255,255,0.32); } .intro-dot { width: 3px; height: 3px; border-radius: 50%; background: #00eaff; box-shadow: 0 0 8px #00eaff; } /* ========================================= MOBILE ========================================= */ @media (max-width: 768px) { .intro-content { width: 92%; } .intro-top-line { gap: 10px; margin-bottom: 18px; } .intro-top-line span { width: 30px; } .intro-top-line p { font-size: 9px; letter-spacing: 2.5px; } .intro-small-text { font-size: 8px; letter-spacing: 2px; margin-bottom: 12px; } .intro-event-name { font-size: clamp(48px, 15vw, 75px); letter-spacing: -3px; } .intro-underline { width: 110px; margin: 16px auto 13px; } .intro-tagline { font-size: 9px; letter-spacing: 3px; } .intro-event-type { margin-top: 15px; padding: 8px 14px; gap: 8px; } .intro-event-type span { font-size: 10px; } .intro-event-type b { font-size: 8px; letter-spacing: 1.5px; } .intro-loading { margin-top: 34px; width: min(280px, 75vw); } .intro-footer { margin-top: 20px; font-size: 7px; letter-spacing: 1.2px; gap: 8px; } .intro-orb-1 { width: 180px; height: 180px; } .intro-orb-2 { width: 200px; height: 200px; } .intro-orb-3 { width: 140px; height: 140px; } } /* ========================================= SMALL MOBILE ========================================= */ @media (max-width: 480px) { .intro-content { width: 94%; } .intro-top-line { margin-bottom: 14px; } .intro-small-text { font-size: 7px; letter-spacing: 1.5px; } .intro-event-name { font-size: 49px; letter-spacing: -2.5px; } .intro-tagline { font-size: 8px; letter-spacing: 2.2px; } .intro-event-type { padding: 7px 13px; } .intro-loading { margin-top: 28px; } .intro-footer { font-size: 6px; letter-spacing: 1px; } } /* ========================================= VERY SMALL SCREEN ========================================= */ @media (max-width: 360px) { .intro-event-name { font-size: 43px; } .intro-small-text { font-size: 6px; } .intro-tagline { font-size: 7px; } .intro-footer { display: none; } } /* ========================================= INTRO HIDE ========================================= */ #introScreen.hide-intro { opacity: 0; visibility: hidden; pointer-events: none; }
+
+
+/* ======================================================
+   HACKFEST POSTER
+====================================================== */
+
+.hackfest-poster-wrap {
+    position: relative;
+    width: min(760px, 92%);
+    margin: 0 auto 75px;
+    text-align: center;
+    perspective: 1200px;
+}
+
+/* Ambient Glow */
+
+.poster-glow {
+    position: absolute;
+    inset: 8%;
+    background:
+        radial-gradient(
+            circle at 30% 30%,
+            rgba(0, 229, 255, 0.35),
+            transparent 45%
+        ),
+        radial-gradient(
+            circle at 70% 70%,
+            rgba(168, 85, 247, 0.35),
+            transparent 45%
+        ),
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(236, 72, 153, 0.25),
+            transparent 55%
+        );
+
+    filter: blur(45px);
+    z-index: -1;
+    animation: posterGlowMove 5s ease-in-out infinite alternate;
+}
+
+@keyframes posterGlowMove {
+
+    0% {
+        transform: scale(0.92);
+        opacity: 0.65;
+    }
+
+    100% {
+        transform: scale(1.08);
+        opacity: 1;
+    }
+}
+
+
+/* Main Frame */
+
+.poster-frame {
+    position: relative;
+    padding: 8px;
+
+    border-radius: 26px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00e5ff,
+            #7c3aed,
+            #ec4899,
+            #00e5ff
+        );
+
+    background-size: 300% 300%;
+
+    animation: posterBorder 7s ease infinite;
+
+    box-shadow:
+        0 0 20px rgba(0, 229, 255, 0.45),
+        0 0 50px rgba(124, 58, 237, 0.30),
+        0 0 90px rgba(236, 72, 153, 0.20);
+
+    overflow: hidden;
+
+    transition:
+        transform 0.5s ease,
+        box-shadow 0.5s ease;
+}
+
+@keyframes posterBorder {
+
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+/* Poster Image */
+
+.hackfest-poster {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    border-radius: 19px;
+
+    background: #080b14;
+
+    object-fit: cover;
+
+    transition:
+        transform 0.6s ease,
+        filter 0.6s ease;
+}
+
+
+/* Hover */
+
+.poster-frame:hover {
+    transform:
+        translateY(-8px)
+        rotateX(2deg)
+        rotateY(-2deg);
+
+    box-shadow:
+        0 0 25px rgba(0, 229, 255, 0.65),
+        0 0 65px rgba(124, 58, 237, 0.45),
+        0 0 110px rgba(236, 72, 153, 0.30);
+}
+
+.poster-frame:hover .hackfest-poster {
+    transform: scale(1.025);
+    filter: brightness(1.08) saturate(1.08);
+}
+
+
+/* ======================================================
+   CORNER DETAILS
+====================================================== */
+
+.poster-corner {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+
+    z-index: 5;
+
+    pointer-events: none;
+}
+
+.corner-tl {
+    top: 18px;
+    left: 18px;
+
+    border-top: 3px solid #00e5ff;
+    border-left: 3px solid #00e5ff;
+
+    border-radius: 5px 0 0 0;
+}
+
+.corner-tr {
+    top: 18px;
+    right: 18px;
+
+    border-top: 3px solid #ec4899;
+    border-right: 3px solid #ec4899;
+
+    border-radius: 0 5px 0 0;
+}
+
+.corner-bl {
+    bottom: 18px;
+    left: 18px;
+
+    border-bottom: 3px solid #a855f7;
+    border-left: 3px solid #a855f7;
+
+    border-radius: 0 0 0 5px;
+}
+
+.corner-br {
+    bottom: 18px;
+    right: 18px;
+
+    border-bottom: 3px solid #00e5ff;
+    border-right: 3px solid #00e5ff;
+
+    border-radius: 0 0 5px 0;
+}
+
+
+/* ======================================================
+   POSTER LABEL
+====================================================== */
+
+.poster-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    margin-top: 18px;
+    padding: 9px 20px;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    border-radius: 999px;
+
+    background:
+        rgba(255, 255, 255, 0.05);
+
+    backdrop-filter: blur(15px);
+
+    color: rgba(255, 255, 255, 0.75);
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+
+    box-shadow:
+        0 0 25px rgba(0, 229, 255, 0.08);
+}
+
+.poster-label span:first-child {
+    color: #00e5ff;
+
+    animation:
+        posterStar 1.8s ease-in-out infinite;
+}
+
+.poster-label span:last-child {
+    color: #ec4899;
+
+    animation:
+        posterStar 1.8s ease-in-out infinite reverse;
+}
+
+@keyframes posterStar {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: scale(1.4);
+        opacity: 1;
+    }
+}
+
+
+/* ======================================================
+   MOBILE
+====================================================== */
+
+@media (max-width: 768px) {
+
+    .hackfest-poster-wrap {
+        width: 94%;
+        margin-bottom: 55px;
+    }
+
+    .poster-frame {
+        padding: 5px;
+        border-radius: 20px;
+    }
+
+    .hackfest-poster {
+        border-radius: 15px;
+    }
+
+    .poster-corner {
+        width: 20px;
+        height: 20px;
+    }
+
+    .corner-tl,
+    .corner-tr {
+        top: 12px;
+    }
+
+    .corner-bl,
+    .corner-br {
+        bottom: 12px;
+    }
+
+    .corner-tl,
+    .corner-bl {
+        left: 12px;
+    }
+
+    .corner-tr,
+    .corner-br {
+        right: 12px;
+    }
+
+    .poster-label {
+        font-size: 8px;
+        letter-spacing: 1.2px;
+        padding: 8px 13px;
+        gap: 7px;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .hackfest-poster-wrap {
+        width: 96%;
+    }
+
+    .poster-label {
+        font-size: 7px;
+        letter-spacing: 1px;
+    }
+
+}
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.background{
+    position:fixed;
+    inset:0;
+    z-index:-10;
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(0,234,255,.13),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 85% 25%,
+            rgba(155,92,255,.15),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 50% 90%,
+            rgba(255,60,172,.10),
+            transparent 30%
+        ),
+        #05070d;
+}
+
+.orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(80px);
+    opacity:.4;
+
+    animation:
+        float 12s ease-in-out infinite alternate;
+}
+
+.orb.one{
+    width:300px;
+    height:300px;
+
+    background:#00eaff;
+
+    left:-100px;
+    top:15%;
+}
+
+.orb.two{
+    width:350px;
+    height:350px;
+
+    background:#793cff;
+
+    right:-120px;
+    top:25%;
+
+    animation-delay:2s;
+}
+
+.orb.three{
+    width:300px;
+    height:300px;
+
+    background:#ff2695;
+
+    left:35%;
+    bottom:-150px;
+
+    animation-delay:4s;
+}
+
+@keyframes float{
+
+    from{
+        transform:translate(0,0) scale(1);
+    }
+
+    to{
+        transform:translate(60px,-40px) scale(1.15);
+    }
+}
+
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.grid{
+    position:absolute;
+    inset:0;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.035) 1px,
+            transparent 1px
+        );
+
+    background-size:60px 60px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent 85%
+        );
+}
+
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+.particles span{
+    position:absolute;
+
+    width:3px;
+    height:3px;
+
+    background:#fff;
+
+    border-radius:50%;
+
+    opacity:.5;
+
+    animation:
+        particle 8s linear infinite;
+}
+
+.particles span:nth-child(1){
+    left:10%;
+    top:20%;
+}
+
+.particles span:nth-child(2){
+    left:20%;
+    top:70%;
+    animation-delay:1s;
+}
+
+.particles span:nth-child(3){
+    left:30%;
+    top:40%;
+    animation-delay:2s;
+}
+
+.particles span:nth-child(4){
+    left:40%;
+    top:80%;
+    animation-delay:3s;
+}
+
+.particles span:nth-child(5){
+    left:50%;
+    top:25%;
+    animation-delay:4s;
+}
+
+.particles span:nth-child(6){
+    left:60%;
+    top:65%;
+    animation-delay:2s;
+}
+
+.particles span:nth-child(7){
+    left:70%;
+    top:30%;
+    animation-delay:1s;
+}
+
+.particles span:nth-child(8){
+    left:80%;
+    top:75%;
+    animation-delay:3s;
+}
+
+.particles span:nth-child(9){
+    left:90%;
+    top:20%;
+    animation-delay:4s;
+}
+
+.particles span:nth-child(10){
+    left:15%;
+    top:50%;
+    animation-delay:5s;
+}
+
+@keyframes particle{
+
+    0%{
+        transform:translateY(0);
+        opacity:.2;
+    }
+
+    50%{
+        opacity:1;
+    }
+
+    100%{
+        transform:translateY(-100px);
+        opacity:0;
+    }
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar{
+    position:fixed;
+
+    top:18px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:min(1150px,92%);
+
+    padding:13px 18px;
+
+    border:1px solid var(--border);
+
+    background:rgba(5,7,13,.65);
+
+    backdrop-filter:blur(20px);
+
+    border-radius:20px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    z-index:1000;
+
+    box-shadow:
+        0 10px 40px rgba(0,0,0,.25);
+}
+
+.logo{
+    font-weight:900;
+
+    letter-spacing:1px;
+
+    white-space:nowrap;
+}
+
+.logo span{
+    color:var(--cyan);
+}
+
+.nav-links{
+    display:flex;
+
+    gap:25px;
+
+    align-items:center;
+}
+
+.nav-links a{
+    color:#cbd0dd;
+
+    font-size:14px;
+
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:var(--cyan);
+}
+
+.nav-register{
+    padding:10px 18px;
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--cyan),
+            var(--blue)
+        );
+
+    color:#001018 !important;
+
+    font-weight:800;
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    transition:.3s;
+}
+
+.nav-register:hover{
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 10px 30px rgba(0,234,255,.2);
+}
+
+.admin-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:10px 18px;
+
+    color:#ffffff;
+
+    border:1px solid rgba(255,255,255,.18);
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,.05);
+
+    backdrop-filter:blur(12px);
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:.3s;
+}
+
+.admin-btn:hover{
+
+    color:#00eaff;
+
+    border-color:#00eaff;
+
+    background:rgba(0,234,255,.08);
+
+    box-shadow:
+        0 0 20px rgba(0,234,255,.15);
+
+    transform:translateY(-2px);
+}
+
+.menu-btn{
+    display:none;
+
+    background:none;
+
+    border:0;
+
+    color:white;
+
+    font-size:25px;
+
+    cursor:pointer;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    padding:
+        140px 20px 80px;
+}
+
+.hero-content{
+    max-width:950px;
+}
+
+.badge{
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:8px 16px;
+
+    border:
+        1px solid rgba(0,234,255,.3);
+
+    background:
+        rgba(0,234,255,.06);
+
+    color:var(--cyan);
+
+    border-radius:999px;
+
+    font-size:13px;
+
+    margin-bottom:25px;
+}
+
+.hero h1{
+    font-size:
+        clamp(60px,12vw,145px);
+
+    line-height:.85;
+
+    font-weight:1000;
+
+    letter-spacing:-7px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #fff,
+            #00eaff,
+            #9b5cff,
+            #ff3cac,
+            #fff
+        );
+
+    background-size:300%;
+
+    -webkit-background-clip:text;
+
+    color:transparent;
+
+    animation:
+        gradientMove 7s linear infinite;
+}
+
+@keyframes gradientMove{
+
+    0%{
+        background-position:0%;
+    }
+
+    100%{
+        background-position:300%;
+    }
+}
+
+.hero h2{
+    margin-top:25px;
+
+    font-size:
+        clamp(18px,3vw,30px);
+
+    color:#dce2ef;
+
+    letter-spacing:3px;
+}
+
+.hero p{
+    max-width:700px;
+
+    margin:25px auto;
+
+    color:var(--muted);
+
+    line-height:1.8;
+
+    font-size:16px;
+}
+
+.hero-buttons{
+    display:flex;
+
+    justify-content:center;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+    margin-top:30px;
+}
+
+.btn{
+    padding:14px 25px;
+
+    border-radius:14px;
+
+    font-weight:800;
+
+    display:inline-block;
+
+    transition:.3s;
+}
+
+.btn-primary{
+    background:
+        linear-gradient(
+            135deg,
+            var(--cyan),
+            var(--blue)
+        );
+
+    color:#001018;
+
+    box-shadow:
+        0 0 35px rgba(0,234,255,.25);
+}
+
+.btn-secondary{
+    border:
+        1px solid var(--border);
+
+    background:
+        rgba(255,255,255,.05);
+}
+
+.btn:hover{
+    transform:translateY(-4px);
+}
+
+
+
+
+
+
+
+/* =========================================
+   HACKFEST PREMIUM COUNTDOWN
+   Futuristic • Neon • Glassmorphism
+========================================= */
+
+.hackfest-countdown {
+    position: relative;
+    width: min(900px, 94%);
+    margin: 45px auto 0;
+    padding: 28px 30px 32px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0, 238, 255, 0.08),
+            rgba(125, 70, 255, 0.10),
+            rgba(255, 0, 153, 0.08)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 28px;
+
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+
+    box-shadow:
+        0 20px 70px rgba(0, 0, 0, 0.45),
+        0 0 40px rgba(0, 238, 255, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+    overflow: hidden;
+    isolation: isolate;
+}
+
+
+/* =========================================
+   MOVING COLORFUL BORDER
+========================================= */
+
+.hackfest-countdown::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+
+    background: linear-gradient(
+        90deg,
+        #00f5ff,
+        #0066ff,
+        #8b5cf6,
+        #ff00cc,
+        #ff3d81,
+        #00f5ff
+    );
+
+    background-size: 300% 100%;
+
+    animation: countdownBorder 7s linear infinite;
+
+    z-index: -2;
+    border-radius: 30px;
+}
+
+.hackfest-countdown::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+
+    background: rgba(7, 9, 25, 0.92);
+
+    border-radius: 27px;
+    z-index: -1;
+}
+
+@keyframes countdownBorder {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+/* =========================================
+   TOP AMBIENT GLOW
+========================================= */
+
+.hackfest-countdown {
+    --cyan: #00f5ff;
+    --blue: #3478ff;
+    --purple: #9b5cff;
+    --pink: #ff3cac;
+}
+
+.hackfest-countdown .countdown-title::before {
+    content: "";
+    position: absolute;
+
+    width: 280px;
+    height: 100px;
+
+    left: 50%;
+    top: -65px;
+
+    transform: translateX(-50%);
+
+    background: rgba(0, 238, 255, 0.18);
+    filter: blur(55px);
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   COUNTDOWN TITLE
+========================================= */
+
+.countdown-title {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+
+    margin-bottom: 25px;
+
+    color: #ffffff;
+
+    font-family: "Arial", sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+
+    letter-spacing: 4px;
+    text-transform: uppercase;
+
+    text-shadow:
+        0 0 10px rgba(0, 245, 255, 0.5),
+        0 0 25px rgba(155, 92, 255, 0.25);
+}
+
+
+/* =========================================
+   PULSE DOTS
+========================================= */
+
+.pulse-dot {
+    position: relative;
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #00f5ff;
+
+    box-shadow:
+        0 0 8px #00f5ff,
+        0 0 18px #00f5ff,
+        0 0 30px rgba(0, 245, 255, 0.8);
+
+    animation: pulseDot 1.5s ease-in-out infinite;
+}
+
+.pulse-dot:last-child {
+    background: #ff3cac;
+
+    box-shadow:
+        0 0 8px #ff3cac,
+        0 0 18px #ff3cac,
+        0 0 30px rgba(255, 60, 172, 0.8);
+
+    animation-delay: 0.4s;
+}
+
+@keyframes pulseDot {
+    0%,
+    100% {
+        transform: scale(0.8);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: scale(1.35);
+        opacity: 1;
+    }
+}
+
+
+/* =========================================
+   COUNTDOWN ROW
+========================================= */
+
+.countdown {
+    position: relative;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 18px;
+
+    width: 100%;
+}
+
+
+/* =========================================
+   TIME BOX
+========================================= */
+
+.time-box {
+    position: relative;
+
+    min-height: 135px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px 12px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.10),
+            rgba(255, 255, 255, 0.035)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.13);
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    transition:
+        transform 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+
+/* =========================================
+   COLORFUL TOP LINE
+========================================= */
+
+.time-box::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 12%;
+    right: 12%;
+
+    height: 3px;
+
+    border-radius: 0 0 20px 20px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #00f5ff,
+        transparent
+    );
+
+    box-shadow:
+        0 0 12px #00f5ff,
+        0 0 25px rgba(0, 245, 255, 0.7);
+}
+
+
+/* Each box different color */
+
+.time-box:nth-child(2)::before {
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #3478ff,
+        transparent
+    );
+
+    box-shadow:
+        0 0 12px #3478ff,
+        0 0 25px rgba(52, 120, 255, 0.7);
+}
+
+.time-box:nth-child(3)::before {
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #9b5cff,
+        transparent
+    );
+
+    box-shadow:
+        0 0 12px #9b5cff,
+        0 0 25px rgba(155, 92, 255, 0.7);
+}
+
+.time-box:nth-child(4)::before {
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #ff3cac,
+        transparent
+    );
+
+    box-shadow:
+        0 0 12px #ff3cac,
+        0 0 25px rgba(255, 60, 172, 0.7);
+}
+
+
+/* =========================================
+   INNER LIGHT
+========================================= */
+
+.time-box::after {
+    content: "";
+
+    position: absolute;
+
+    width: 100px;
+    height: 100px;
+
+    top: -55px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background: rgba(0, 245, 255, 0.15);
+
+    filter: blur(35px);
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   NUMBER
+========================================= */
+
+.time-box strong {
+    position: relative;
+    z-index: 2;
+
+    display: block;
+
+    font-family: "Arial", sans-serif;
+
+    font-size: clamp(42px, 6vw, 64px);
+
+    line-height: 1;
+    font-weight: 900;
+
+    letter-spacing: -2px;
+
+    background: linear-gradient(
+        135deg,
+        #ffffff 5%,
+        #00f5ff 45%,
+        #8b5cff 75%,
+        #ff3cac 100%
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    filter:
+        drop-shadow(0 0 8px rgba(0, 245, 255, 0.35))
+        drop-shadow(0 0 18px rgba(139, 92, 255, 0.25));
+
+    animation: numberGlow 3s ease-in-out infinite;
+}
+
+@keyframes numberGlow {
+    0%,
+    100% {
+        filter:
+            drop-shadow(0 0 7px rgba(0, 245, 255, 0.3));
+    }
+
+    50% {
+        filter:
+            drop-shadow(0 0 14px rgba(0, 245, 255, 0.65))
+            drop-shadow(0 0 24px rgba(155, 92, 255, 0.35));
+    }
+}
+
+
+/* =========================================
+   LABEL
+========================================= */
+
+.time-box span {
+    position: relative;
+    z-index: 2;
+
+    margin-top: 13px;
+
+    font-family: "Arial", sans-serif;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 3px;
+
+    color: rgba(255, 255, 255, 0.58);
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================
+   HOVER EFFECT
+========================================= */
+
+.time-box:hover {
+    transform: translateY(-8px) scale(1.025);
+
+    border-color: rgba(0, 245, 255, 0.45);
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.35),
+        0 0 25px rgba(0, 245, 255, 0.15),
+        inset 0 0 25px rgba(0, 245, 255, 0.04);
+}
+
+.time-box:nth-child(2):hover {
+    border-color: rgba(52, 120, 255, 0.55);
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.35),
+        0 0 28px rgba(52, 120, 255, 0.18);
+}
+
+.time-box:nth-child(3):hover {
+    border-color: rgba(155, 92, 255, 0.55);
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.35),
+        0 0 28px rgba(155, 92, 255, 0.18);
+}
+
+.time-box:nth-child(4):hover {
+    border-color: rgba(255, 60, 172, 0.55);
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.35),
+        0 0 28px rgba(255, 60, 172, 0.18);
+}
+
+
+/* =========================================
+   RESPONSIVE — TABLET
+========================================= */
+
+@media (max-width: 768px) {
+
+    .hackfest-countdown {
+        padding: 24px 18px 25px;
+        border-radius: 23px;
+    }
+
+    .countdown {
+        gap: 10px;
+    }
+
+    .time-box {
+        min-height: 110px;
+        border-radius: 16px;
+        padding: 15px 8px;
+    }
+
+    .time-box strong {
+        font-size: 42px;
+    }
+
+    .time-box span {
+        font-size: 8px;
+        letter-spacing: 2px;
+        margin-top: 10px;
+    }
+
+    .countdown-title {
+        font-size: 11px;
+        letter-spacing: 2.5px;
+        gap: 10px;
+    }
+}
+
+
+/* =========================================
+   RESPONSIVE — MOBILE
+========================================= */
+
+@media (max-width: 520px) {
+
+    .hackfest-countdown {
+        width: 92%;
+        margin-top: 30px;
+
+        padding: 22px 12px 20px;
+
+        border-radius: 20px;
+    }
+
+    .hackfest-countdown::after {
+        border-radius: 19px;
+    }
+
+    .countdown-title {
+        font-size: 9px;
+        letter-spacing: 2px;
+
+        margin-bottom: 18px;
+    }
+
+    .pulse-dot {
+        width: 6px;
+        height: 6px;
+    }
+
+    .countdown {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .time-box {
+        min-height: 105px;
+        padding: 14px 8px;
+
+        border-radius: 15px;
+    }
+
+    .time-box strong {
+        font-size: 39px;
+    }
+
+    .time-box span {
+        font-size: 8px;
+        letter-spacing: 2px;
+        margin-top: 9px;
+    }
+
+    .time-box:hover {
+        transform: translateY(-4px) scale(1.015);
+    }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 360px) {
+
+    .hackfest-countdown {
+        padding: 18px 9px;
+    }
+
+    .countdown {
+        gap: 8px;
+    }
+
+    .time-box {
+        min-height: 95px;
+    }
+
+    .time-box strong {
+        font-size: 34px;
+    }
+
+    .time-box span {
+        font-size: 7px;
+        letter-spacing: 1.5px;
+    }
+
+    .countdown-title {
+        font-size: 8px;
+        letter-spacing: 1.5px;
+    }
+}
+/* ======================================================
+   PREMIUM HACKFEST COUNTDOWN
+====================================================== */
+
+.hackfest-countdown {
+    position: relative;
+
+    width: min(850px, 95%);
+    margin: 45px auto 0;
+
+    padding: 28px 25px 24px;
+
+    text-align: center;
+
+    border-radius: 30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.08),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.35),
+        0 0 45px rgba(0, 229, 255, 0.08);
+
+    overflow: hidden;
+}
+
+
+/* Animated top gradient line */
+
+.hackfest-countdown::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 10%;
+    right: 10%;
+
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #00e5ff,
+            #8b5cf6,
+            #ec4899,
+            #00e5ff,
+            transparent
+        );
+
+    background-size: 200% 100%;
+
+    animation: countdownLine 4s linear infinite;
+
+    box-shadow:
+        0 0 12px #00e5ff,
+        0 0 25px rgba(236, 72, 153, 0.6);
+}
+
+@keyframes countdownLine {
+
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 200% 50%;
+    }
+}
+
+
+/* Ambient background */
+
+.hackfest-countdown::after {
+    content: "";
+
+    position: absolute;
+
+    width: 280px;
+    height: 280px;
+
+    top: -180px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0, 229, 255, 0.16),
+            transparent 70%
+        );
+
+    pointer-events: none;
+}
+
+
+/* ======================================================
+   TITLE
+====================================================== */
+
+.countdown-title {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-bottom: 22px;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    letter-spacing: 4px;
+
+    color: rgba(255, 255, 255, 0.75);
+
+    text-transform: uppercase;
+}
+
+
+/* Small glowing dots */
+
+.pulse-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #00e5ff;
+
+    box-shadow:
+        0 0 8px #00e5ff,
+        0 0 18px #00e5ff;
+
+    animation: pulseDot 1.5s ease-in-out infinite;
+}
+
+.pulse-dot:last-child {
+    background: #ec4899;
+
+    box-shadow:
+        0 0 8px #ec4899,
+        0 0 18px #ec4899;
+}
+
+@keyframes pulseDot {
+
+    0%,
+    100% {
+        transform: scale(0.7);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.3);
+        opacity: 1;
+    }
+}
+
+
+
+/* =========================================================
+   COMMON SECTION
+========================================================= */
+
+section{
+    padding:110px 20px;
+}
+
+.container{
+
+    width:min(1100px,92%);
+
+    margin:auto;
+}
+
+.section-head{
+
+    text-align:center;
+
+    margin-bottom:55px;
+}
+
+.section-head .mini{
+
+    color:var(--cyan);
+
+    font-size:13px;
+
+    text-transform:uppercase;
+
+    letter-spacing:3px;
+
+    margin-bottom:12px;
+}
+
+.section-head h2{
+
+    font-size:
+        clamp(35px,5vw,65px);
+
+    margin-bottom:15px;
+}
+
+.section-head p{
+
+    color:var(--muted);
+
+    max-width:650px;
+
+    margin:auto;
+
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   GLASS CARD
+========================================================= */
+
+.glass{
+
+    background:var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:25px;
+
+    backdrop-filter:blur(20px);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.2);
+}
+
+
+/* ======================================================
+   HACKFEST — PREMIUM COLORFUL ABOUT SECTION
+====================================================== */
+
+#about {
+    position: relative;
+    padding: 120px 20px;
+    overflow: hidden;
+}
+
+/* Background ambient glow */
+#about::before {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    top: 10%;
+    left: -180px;
+
+    border-radius: 50%;
+
+    background: rgba(0, 225, 255, 0.10);
+    filter: blur(100px);
+
+    pointer-events: none;
+}
+
+#about::after {
+    content: "";
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    right: -150px;
+    bottom: 0;
+
+    border-radius: 50%;
+
+    background: rgba(174, 76, 255, 0.11);
+    filter: blur(100px);
+
+    pointer-events: none;
+}
+
+
+/* ======================================================
+   SECTION HEADING
+====================================================== */
+
+#about .section-head {
+    position: relative;
+    z-index: 2;
+
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 65px;
+}
+
+#about .section-head .mini {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 8px 17px;
+
+    border-radius: 50px;
+
+    border: 1px solid rgba(0, 234, 255, 0.22);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0, 234, 255, 0.10),
+            rgba(160, 70, 255, 0.10)
+        );
+
+    color: #75efff;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+
+    box-shadow:
+        0 0 25px rgba(0, 220, 255, 0.08);
+
+    margin-bottom: 18px;
+}
+
+#about .section-head h2 {
+    margin: 0;
+
+    font-size: clamp(40px, 5vw, 64px);
+
+    line-height: 1.05;
+
+    font-weight: 900;
+
+    letter-spacing: -2.5px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff 5%,
+            #6eefff 35%,
+            #9d6cff 65%,
+            #ff62b0 95%
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+
+    text-shadow:
+        0 0 35px rgba(100, 200, 255, 0.10);
+}
+
+#about .section-head > p {
+    margin-top: 17px;
+
+    font-size: 15px;
+
+    color: rgba(255,255,255,0.55);
+
+    letter-spacing: 2px;
+}
+
+
+/* ======================================================
+   ABOUT GRID
+====================================================== */
+
+#about .about-grid {
+    position: relative;
+    z-index: 2;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.25fr)
+        minmax(300px, 0.75fr);
+
+    gap: 30px;
+
+    max-width: 1150px;
+
+    margin: auto;
+}
+
+
+/* ======================================================
+   MAIN ABOUT CARD
+====================================================== */
+
+#about .about-card {
+    position: relative;
+
+    padding: 45px 42px;
+
+    border-radius: 30px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0, 234, 255, 0.075),
+            rgba(255,255,255,0.035) 45%,
+            rgba(155, 80, 255, 0.075)
+        );
+
+    border: 1px solid rgba(255,255,255,0.12);
+
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,0.20),
+        inset 0 1px 0 rgba(255,255,255,0.07);
+
+    transition:
+        transform 0.45s ease,
+        border-color 0.45s ease,
+        box-shadow 0.45s ease;
+}
+
+
+/* Top colorful line */
+
+#about .about-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 8%;
+
+    width: 84%;
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #00eaff,
+            #765cff,
+            #ff4da6,
+            transparent
+        );
+
+    box-shadow:
+        0 0 18px rgba(0, 220, 255, 0.5);
+}
+
+
+/* Internal glow */
+
+#about .about-card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 250px;
+    height: 250px;
+
+    right: -120px;
+    top: -130px;
+
+    border-radius: 50%;
+
+    background: rgba(0, 220, 255, 0.08);
+
+    filter: blur(45px);
+
+    pointer-events: none;
+}
+
+
+/* Hover */
+
+#about .about-card:hover {
+    transform: translateY(-7px);
+
+    border-color:
+        rgba(0, 225, 255, 0.28);
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,0.30),
+        0 0 45px rgba(0, 210, 255, 0.07),
+        inset 0 1px 0 rgba(255,255,255,0.10);
+}
+
+
+/* ======================================================
+   ABOUT CARD HEADING
+====================================================== */
+
+#about .about-card h3 {
+    position: relative;
+    z-index: 2;
+
+    margin: 0 0 22px;
+
+    font-size: clamp(25px, 3vw, 34px);
+
+    line-height: 1.2;
+
+    font-weight: 850;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            #73edff,
+            #a679ff
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+}
+
+
+/* ======================================================
+   ABOUT TEXT
+====================================================== */
+
+#about .about-card p {
+    position: relative;
+    z-index: 2;
+
+    margin: 0;
+
+    font-size: 15px;
+
+    line-height: 1.9;
+
+    color: rgba(255,255,255,0.64);
+}
+
+#about .about-card p:last-child {
+    margin-top: 10px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00eaff,
+            #9b6cff,
+            #ff5ca8
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+}
+
+
+/* ======================================================
+   FEATURE LIST
+====================================================== */
+
+#about .feature-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+}
+
+
+/* ======================================================
+   FEATURE CARD
+====================================================== */
+
+#about .feature {
+    position: relative;
+
+    flex: 1;
+
+    padding: 25px 25px 24px;
+
+    border-radius: 23px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.065),
+            rgba(255,255,255,0.025)
+        );
+
+    border: 1px solid rgba(255,255,255,0.10);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    transition:
+        transform 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+
+/* Color glow per card */
+
+#about .feature:nth-child(1)::before,
+#about .feature:nth-child(2)::before,
+#about .feature:nth-child(3)::before {
+    content: "";
+
+    position: absolute;
+
+    width: 100px;
+    height: 100px;
+
+    right: -35px;
+    top: -35px;
+
+    border-radius: 50%;
+
+    filter: blur(30px);
+
+    opacity: 0.18;
+
+    pointer-events: none;
+}
+
+#about .feature:nth-child(1)::before {
+    background: #ffd000;
+}
+
+#about .feature:nth-child(2)::before {
+    background: #00eaff;
+}
+
+#about .feature:nth-child(3)::before {
+    background: #c45cff;
+}
+
+
+/* Left accent */
+
+#about .feature::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 18px;
+    bottom: 18px;
+
+    width: 3px;
+
+    border-radius: 0 10px 10px 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            #00eaff,
+            #9c5cff,
+            #ff4da6
+        );
+
+    opacity: 0.8;
+}
+
+
+/* Hover */
+
+#about .feature:hover {
+    transform: translateX(7px);
+
+    border-color:
+        rgba(255,255,255,0.20);
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,0.22),
+        0 0 25px rgba(120,100,255,0.06);
+}
+
+
+/* ======================================================
+   FEATURE TITLE
+====================================================== */
+
+#about .feature h4 {
+    position: relative;
+    z-index: 2;
+
+    margin: 0 0 9px;
+
+    font-size: 18px;
+
+    font-weight: 800;
+
+    color: #ffffff;
+}
+
+
+/* Individual colorful title */
+
+#about .feature:nth-child(1) h4 {
+    background:
+        linear-gradient(
+            90deg,
+            #ffe36e,
+            #ffad32
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+}
+
+#about .feature:nth-child(2) h4 {
+    background:
+        linear-gradient(
+            90deg,
+            #6fffff,
+            #3da8ff
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+}
+
+#about .feature:nth-child(3) h4 {
+    background:
+        linear-gradient(
+            90deg,
+            #d68cff,
+            #ff64b4
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+}
+
+
+/* ======================================================
+   FEATURE DESCRIPTION
+====================================================== */
+
+#about .feature p {
+    position: relative;
+    z-index: 2;
+
+    margin: 0;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+
+    color: rgba(255,255,255,0.52);
+}
+
+
+/* ======================================================
+   REVEAL ANIMATION
+====================================================== */
+
+#about .reveal {
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+}
+
+
+/* ======================================================
+   TABLET
+====================================================== */
+
+@media (max-width: 900px) {
+
+    #about {
+        padding: 90px 18px;
+    }
+
+    #about .about-grid {
+        grid-template-columns: 1fr;
+
+        max-width: 700px;
+    }
+
+    #about .feature-list {
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+    #about .feature:hover {
+        transform: translateY(-5px);
+    }
+
+}
+
+
+/* ======================================================
+   MOBILE
+====================================================== */
+
+@media (max-width: 600px) {
+
+    #about {
+        padding: 72px 14px;
+    }
+
+    #about .section-head {
+        margin-bottom: 40px;
+    }
+
+    #about .section-head .mini {
+        font-size: 9px;
+
+        padding: 7px 13px;
+
+        letter-spacing: 1.8px;
+    }
+
+    #about .section-head h2 {
+        font-size: 34px;
+
+        letter-spacing: -1.5px;
+    }
+
+    #about .section-head > p {
+        margin-top: 12px;
+
+        font-size: 12px;
+
+        letter-spacing: 1.2px;
+    }
+
+
+    /* Main card */
+
+    #about .about-card {
+        padding: 30px 21px;
+
+        border-radius: 24px;
+    }
+
+    #about .about-card h3 {
+        font-size: 24px;
+
+        margin-bottom: 16px;
+    }
+
+    #about .about-card p {
+        font-size: 13.5px;
+
+        line-height: 1.8;
+    }
+
+    #about .about-card p:last-child {
+        font-size: 12px;
+
+        letter-spacing: 1px;
+    }
+
+
+    /* Feature cards */
+
+    #about .feature-list {
+        grid-template-columns: 1fr;
+
+        gap: 13px;
+    }
+
+    #about .feature {
+        padding: 21px 20px;
+
+        border-radius: 19px;
+    }
+
+    #about .feature h4 {
+        font-size: 16px;
+    }
+
+    #about .feature p {
+        font-size: 12.5px;
+
+        line-height: 1.65;
+    }
+
+    #about .feature:hover {
+        transform: translateY(-4px);
+    }
+
+}
+
+
+/* ======================================================
+   SMALL MOBILE
+====================================================== */
+
+@media (max-width: 400px) {
+
+    #about {
+        padding: 62px 12px;
+    }
+
+    #about .section-head h2 {
+        font-size: 30px;
+    }
+
+    #about .about-card {
+        padding: 26px 18px;
+    }
+
+    #about .about-card h3 {
+        font-size: 22px;
+    }
+
+    #about .about-card p {
+        font-size: 13px;
+    }
+
+    #about .feature {
+        padding: 19px 17px;
+    }
+
+}
+/* ================================= PREMIUM PRIZE SECTION ================================= */ .prizes-section { position: relative; padding: 110px 20px; overflow: hidden; } .prizes-section::before { content: ""; position: absolute; width: 500px; height: 500px; top: 10%; left: 50%; transform: translateX(-50%); background: radial-gradient( circle, rgba(255, 200, 50, 0.08), transparent 65% ); pointer-events: none; } .section-tag { display: inline-block; padding: 8px 15px; margin-bottom: 15px; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 50px; background: rgba(255, 255, 255, 0.05); font-size: 12px; letter-spacing: 2px; color: #ffd86b; } .section-head h2 { font-size: clamp(38px, 5vw, 62px); margin-bottom: 12px; } .section-head h2 span { background: linear-gradient( 90deg, #ffd700, #ff8c00, #ff4d8d ); -webkit-background-clip: text; background-clip: text; color: transparent; } .section-head p { color: rgba(255,255,255,0.6); } /* ================================= PRIZE GRID ================================= */ .prize-grid { margin-top: 65px; display: grid; grid-template-columns: repeat(3, 1fr); align-items: end; gap: 28px; max-width: 1100px; margin-left: auto; margin-right: auto; } /* ================================= PRIZE CARD ================================= */ .prize-card { position: relative; min-height: 390px; padding: 42px 25px 35px; border-radius: 28px; text-align: center; overflow: hidden; background: linear-gradient( 145deg, rgba(255,255,255,0.09), rgba(255,255,255,0.025) ); border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(20px); transition: transform 0.45s ease, box-shadow 0.45s ease, border-color 0.45s ease; } /* Hover */ .-card:hover { transform: translateY(-14px) scale(1.025); } /* ================================= FIRST PRIZE ================================= */ .first-prize { min-height: 440px; transform: translateY(-20px) scale(1.04); border-color: rgba(255, 210, 60, 0.55); background: radial-gradient( circle at 50% 15%, rgba(255, 200, 40, 0.18), transparent 35% ), linear-gradient( 145deg, rgba(255, 215, 0, 0.11), rgba(255,255,255,0.025) ); box-shadow: 0 25px 80px rgba(255, 180, 0, 0.12), inset 0 0 35px rgba(255, 210, 0, 0.035); } .first-prize:hover { transform: translateY(-30px) scale(1.055); box-shadow: 0 35px 100px rgba(255, 190, 0, 0.22), 0 0 45px rgba(255, 210, 60, 0.12); } /* ================================= WINNER BADGE ================================= */ .winner-badge { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); white-space: nowrap; padding: 7px 16px; border-radius: 50px; font-size: 10px; font-weight: 800; letter-spacing: 2px; color: #241700; background: linear-gradient( 90deg, #fff1a3, #ffd000, #ff9d00 ); box-shadow: 0 0 20px rgba(255, 200, 30, 0.4); z-index: 5; } /* ================================= MEDAL ================================= */ .medal { position: relative; width: 135px; height: 155px; margin: 15px auto 25px; display: flex; justify-content: center; align-items: flex-end; animation: medalFloat 3.2s ease-in-out infinite; } /* Ribbon */ .medal-ribbon { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 48px; height: 58px; clip-path: polygon( 0 0, 100% 0, 82% 100%, 50% 75%, 18% 100% ); } /* Medal circle */ .medal-circle { position: relative; width: 105px; height: 105px; border-radius: 50%; display: flex; justify-content: center; align-items: center; flex-direction: column; border: 7px solid rgba(255,255,255,0.28); box-shadow: inset 0 0 0 4px rgba(0,0,0,0.12), inset 0 0 20px rgba(255,255,255,0.35), 0 12px 25px rgba(0,0,0,0.4); } /* Number */ .medal-number { font-size: 39px; font-weight: 900; line-height: 1; text-shadow: 0 2px 5px rgba(0,0,0,0.35); } /* Star */ .medal-star { font-size: 18px; margin-top: 4px; } /* ================================= GOLD MEDAL ================================= */ .medal-gold .medal-ribbon { background: linear-gradient( 90deg, #8b0000, #ff2020, #8b0000 ); } .medal-gold .medal-circle { background: radial-gradient( circle at 35% 25%, #fff6a0, #ffd700 35%, #e39a00 75%, #9b5b00 ); color: #6a3b00; box-shadow: 0 0 35px rgba(255, 200, 0, 0.45), inset 0 0 25px rgba(255,255,255,0.45), 0 15px 30px rgba(0,0,0,0.45); } /* ================================= SILVER MEDAL ================================= */ .medal-silver .medal-ribbon { background: linear-gradient( 90deg, #24344a, #6d8baa, #24344a ); } .medal-silver .medal-circle { background: radial-gradient( circle at 35% 25%, #ffffff, #dce6ef 40%, #91a2b4 75%, #536170 ); color: #33404d; box-shadow: 0 0 30px rgba(180, 210, 235, 0.25), inset 0 0 25px rgba(255,255,255,0.55), 0 15px 30px rgba(0,0,0,0.45); } /* ================================= BRONZE MEDAL ================================= */ .medal-bronze .medal-ribbon { background: linear-gradient( 90deg, #542100, #a85416, #542100 ); } .medal-bronze .medal-circle { background: radial-gradient( circle at 35% 25%, #ffd0a0, #c87532 40%, #874016 75%, #54250d ); color: #55250d; box-shadow: 0 0 30px rgba(220, 120, 50, 0.28), inset 0 0 25px rgba(255,255,255,0.35), 0 15px 30px rgba(0,0,0,0.45); } /* ================================= MEDAL GLOW ================================= */ .medal-glow { position: absolute; width: 170px; height: 170px; left: 50%; top: 40px; transform: translateX(-50%); border-radius: 50%; filter: blur(35px); opacity: 0.18; pointer-events: none; } .gold .medal-glow { background: #ffd000; } .silver .medal-glow { background: #9dc5e8; } .bronze .medal-glow { background: #e87832; } /* ================================= TEXT ================================= */ .prize-rank { font-size: 13px; font-weight: 800; letter-spacing: 3px; color: rgba(255,255,255,0.65); margin-bottom: 8px; } .gold .prize-rank { color: #ffd95c; } .prize-card h3 { margin: 0; font-size: 48px; font-weight: 900; letter-spacing: -2px; } .gold h3 { background: linear-gradient( 90deg, #fff3a0, #ffd000, #ff9c00 ); -webkit-background-clip: text; background-clip: text; color: transparent; } .silver h3 { color: #dce9f5; } .bronze h3 { color: #e8a06b; } /* ================================= LINE ================================= */ .prize-line { width: 45px; height: 2px; margin: 15px auto; border-radius: 10px; background: rgba(255,255,255,0.3); } .gold .prize-line { background: #ffd000; } /* ================================= DESCRIPTION ================================= */ .prize-card p { margin: 0; color: rgba(255,255,255,0.55); font-size: 13px; line-height: 1.7; } /* ================================= SHINE EFFECT ================================= */ .shine { position: absolute; width: 80px; height: 150%; top: -30%; left: -120px; transform: rotate(20deg); background: linear-gradient( 90deg, transparent, rgba(255,255,255,0.13), transparent ); transition: left 0.7s ease; pointer-events: none; } .prize-card:hover .shine { left: 130%; } /* ================================= MEDAL FLOAT ================================= */ @keyframes medalFloat { 0%, 100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-9px) rotate(1deg); } } 
+/* ================================= MOBILE ================================= */ @media (max-width: 768px) { .prizes-section { padding: 75px 15px; } .section-head h2 { font-size: 38px; } .section-head p { font-size: 14px; line-height: 1.6; } .prize-grid { grid-template-columns: 1fr; gap: 22px; margin-top: 45px; max-width: 420px; } .prize-card, .first-prize { min-height: auto; padding: 38px 20px 32px; transform: none; } .first-prize { order: -1; } .prize-card:hover, .first-prize:hover { transform: translateY(-7px); } .medal { width: 125px; height: 145px; margin-bottom: 20px; } .medal-circle { width: 95px; height: 95px; } .medal-number { font-size: 34px; } .prize-card h3 { font-size: 42px; } .prize-rank { font-size: 12px; letter-spacing: 2.5px; } .prize-card p { font-size: 13px; } } /* ================================= SMALL MOBILE ================================= */ @media (max-width: 480px) { .prizes-section { padding: 65px 12px; } .section-tag { font-size: 10px; padding: 7px 12px; } .section-head h2 { font-size: 34px; } .section-head p { font-size: 13px; } .prize-grid { margin-top: 35px; gap: 18px; } .prize-card { border-radius: 23px; padding: 32px 16px 28px; } .medal { transform: scale(0.92); margin-top: 5px; } .prize-card h3 { font-size: 39px; } .winner-badge { font-size: 9px; letter-spacing: 1.5px; padding: 6px 12px; } }
+
+
+/* =========================================================
+   RULES
+========================================================= */
+
+.rules{
+
+    display:grid;
+
+    gap:15px;
+}
+
+.rule{
+
+    display:flex;
+
+    gap:18px;
+
+    padding:23px;
+
+    align-items:flex-start;
+}
+
+.rule-number{
+
+    min-width:38px;
+
+    height:38px;
+
+    border-radius:50%;
+
+    display:grid;
+
+    place-items:center;
+
+    background:
+        rgba(0,234,255,.1);
+
+    border:
+        1px solid rgba(0,234,255,.3);
+
+    color:var(--cyan);
+
+    font-weight:bold;
+}
+
+.rule p{
+
+    color:#c3c8d5;
+
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+.timeline{
+
+    position:relative;
+
+    max-width:800px;
+
+    margin:auto;
+}
+
+.timeline::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+
+    top:0;
+
+    bottom:0;
+
+    width:2px;
+
+    background:
+        linear-gradient(
+            var(--cyan),
+            var(--purple),
+            var(--pink)
+        );
+
+    transform:translateX(-50%);
+}
+
+.timeline-item{
+
+    width:50%;
+
+    padding:15px 35px;
+
+    position:relative;
+}
+
+.timeline-item:nth-child(odd){
+
+    left:0;
+
+    text-align:right;
+}
+
+.timeline-item:nth-child(even){
+
+    left:50%;
+}
+
+.timeline-dot{
+
+    position:absolute;
+
+    top:28px;
+
+    width:13px;
+
+    height:13px;
+
+    background:var(--cyan);
+
+    border-radius:50%;
+
+    box-shadow:
+        0 0 20px var(--cyan);
+}
+
+.timeline-item:nth-child(odd)
+.timeline-dot{
+
+    right:-7px;
+}
+
+.timeline-item:nth-child(even)
+.timeline-dot{
+
+    left:-7px;
+}
+
+.timeline-card{
+
+    padding:22px;
+}
+
+.timeline-card .time{
+
+    color:var(--cyan);
+
+    font-weight:bold;
+
+    margin-bottom:7px;
+}
+
+.timeline-card h3{
+
+    margin-bottom:7px;
+}
+
+.timeline-card p{
+
+    color:var(--muted);
+
+    font-size:14px;
+}
+
+
+/* =========================================================
+   MENTORS
+========================================================= */
+
+.people-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:18px;
+}
+
+.person{
+
+    padding:25px 18px;
+
+    text-align:center;
+}
+
+.avatar{
+
+    width:90px;
+
+    height:90px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    display:grid;
+
+    place-items:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00eaff,
+            #7b4dff,
+            #ff3cac
+        );
+
+    font-size:30px;
+
+    font-weight:bold;
+}
+
+.person h3{
+
+    margin-top:18px;
+
+    font-size:17px;
+}
+
+.person .role{
+
+    margin-top:8px;
+
+    color:var(--cyan);
+
+    font-size:12px;
+}
+
+.person p{
+
+    margin-top:10px;
+
+    color:var(--muted);
+
+    font-size:12px;
+
+    line-height:1.6;
+}
+
+
+/* =========================================================
+   COORDINATORS
+========================================================= */
+
+.coordinator-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:20px;
+}
+
+.coordinator{
+
+    padding:28px;
+}
+
+.coordinator h3{
+
+    color:var(--cyan);
+
+    margin-bottom:15px;
+}
+
+.coordinator p{
+
+    color:var(--muted);
+
+    line-height:1.8;
+}
+
+
+/* =========================================================
+   LOCATION
+========================================================= */
+
+.location{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:20px;
+}
+
+.address{
+
+    padding:35px;
+}
+
+.address h3{
+
+    font-size:30px;
+
+    margin-bottom:20px;
+}
+
+.address p{
+
+    color:var(--muted);
+
+    line-height:1.9;
+}
+
+.map{
+
+    min-height:350px;
+
+    overflow:hidden;
+}
+
+.map iframe{
+
+    width:100%;
+
+    height:100%;
+
+    min-height:350px;
+
+    border:0;
+}
+
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.cta{
+
+    text-align:center;
+}
+
+.cta-box{
+
+    padding:70px 25px;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.cta-box::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:350px;
+
+    height:350px;
+
+    background:var(--purple);
+
+    filter:blur(120px);
+
+    opacity:.25;
+
+    top:-150px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+}
+
+.cta-box > *{
+
+    position:relative;
+}
+
+.cta h2{
+
+    font-size:
+        clamp(40px,7vw,80px);
+
+    margin-bottom:20px;
+}
+
+.cta p{
+
+    color:var(--muted);
+
+    margin-bottom:30px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+
+    border-top:
+        1px solid var(--border);
+
+    padding:45px 20px;
+
+    text-align:center;
+}
+
+footer h3{
+
+    color:var(--cyan);
+}
+
+footer p{
+
+    color:#737b8e;
+
+    margin-top:10px;
+
+    font-size:13px;
+
+    line-height:1.6;
+}
+
+.footer-links{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+    margin-top:20px;
+
+    color:#aeb5c4;
+
+    font-size:13px;
+
+    flex-wrap:wrap;
+}
+
+
+/* =========================================================
+   REVEAL
+========================================================= */
+
+.reveal{
+
+    opacity:0;
+
+    transform:translateY(35px);
+
+    transition:1s ease;
+}
+
+.reveal.show{
+
+    opacity:1;
+
+    transform:translateY(0);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media(max-width:900px){
+
+    .navbar{
+
+        width:94%;
+
+        padding:12px 15px;
+    }
+
+    .nav-links{
+
+        position:absolute;
+
+        top:65px;
+
+        left:0;
+
+        width:100%;
+
+        padding:20px;
+
+        background:
+            rgba(5,7,13,.96);
+
+        border:
+            1px solid var(--border);
+
+        border-radius:18px;
+
+        display:none;
+
+        flex-direction:column;
+
+        gap:15px;
+    }
+
+    .nav-links.active{
+
+        display:flex;
+    }
+
+    .menu-btn{
+
+        display:block;
+    }
+
+    .about-grid,
+    .location{
+
+        grid-template-columns:1fr;
+    }
+
+    .people-grid{
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .coordinator-grid{
+
+        grid-template-columns:1fr;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:650px){
+
+    body{
+        font-size:14px;
+    }
+
+    .navbar{
+
+        top:8px;
+
+        width:94%;
+
+        padding:11px 13px;
+
+        border-radius:15px;
+    }
+
+    .logo{
+
+        font-size:16px;
+
+        letter-spacing:.5px;
+    }
+
+    .menu-btn{
+
+        font-size:23px;
+
+        padding:2px 4px;
+    }
+
+    .nav-links{
+
+        top:58px;
+
+        padding:18px 15px;
+
+        gap:5px;
+
+        border-radius:15px;
+    }
+
+    .nav-links a{
+
+        width:100%;
+
+        text-align:center;
+
+        padding:11px;
+
+        font-size:13px;
+    }
+
+    .nav-links .admin-btn{
+
+        padding:11px;
+    }
+
+    .nav-links .nav-register{
+
+        padding:12px;
+    }
+
+
+    /* INTRO */
+
+    .intro-content{
+
+        width:92%;
+    }
+
+    .intro-small{
+
+        font-size:8px;
+
+        letter-spacing:2px;
+
+        margin-bottom:18px;
+    }
+
+    .intro-title{
+
+        font-size:
+            clamp(50px,17vw,90px);
+
+        letter-spacing:-4px;
+    }
+
+    .intro-subtitle{
+
+        margin-top:18px;
+
+        font-size:11px;
+
+        letter-spacing:4px;
+    }
+
+    .intro-loader{
+
+        width:75%;
+
+        margin-top:32px;
+    }
+
+    .intro-loading{
+
+        font-size:8px;
+
+        letter-spacing:2px;
+    }
+
+
+    /* HERO */
+
+    .hero{
+
+        min-height:100svh;
+
+        padding:
+            120px 16px 55px;
+    }
+
+    .hero-content{
+
+        width:100%;
+    }
+
+    .badge{
+
+        max-width:100%;
+
+        padding:7px 11px;
+
+        font-size:9px;
+
+        letter-spacing:.3px;
+
+        margin-bottom:22px;
+    }
+
+    .hero h1{
+
+        font-size:
+            clamp(52px,17vw,90px);
+
+        letter-spacing:-4px;
+
+        line-height:.9;
+    }
+
+    .hero h2{
+
+        margin-top:18px;
+
+        font-size:15px;
+
+        letter-spacing:2px;
+    }
+
+    .hero p{
+
+        margin:20px auto;
+
+        font-size:13px;
+
+        line-height:1.7;
+
+        max-width:95%;
+    }
+
+    .hero-buttons{
+
+        margin-top:24px;
+
+        gap:10px;
+    }
+
+    .hero-buttons .nav-register{
+
+        width:100%;
+
+        max-width:280px;
+
+        padding:13px 18px;
+
+        font-size:14px;
+    }
+
+
+    /* COUNTDOWN */
+
+    .countdown{
+
+        margin-top:32px;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(4,1fr);
+
+        gap:9px;
+
+        width:100%;
+
+        max-width:480px;
+    }
+
+    .time-box{
+
+        padding:15px 8px;
+
+        border-radius:14px;
+
+        background: rgba(255, 255, 255, 0.05);
+
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .time-box strong{
+
+        display: block;
+
+        font-size:27px;
+    }
+
+    .time-box span{
+
+        font-size:9px;
+
+        letter-spacing:.5px;
+
+        color: var(--muted);
+    }
+
+
+    /* SECTIONS */
+
+    section{
+
+        padding:70px 14px;
+    }
+
+    .container{
+
+        width:100%;
+    }
+
+    .section-head{
+
+        margin-bottom:35px;
+    }
+
+    .section-head .mini{
+
+        font-size:10px;
+
+        letter-spacing:2px;
+
+        margin-bottom:10px;
+    }
+
+    .section-head h2{
+
+        font-size:
+            clamp(29px,9vw,42px);
+
+        line-height:1.05;
+
+        margin-bottom:12px;
+    }
+
+    .section-head p{
+
+        font-size:13px;
+
+        line-height:1.7;
+
+        padding:0 5px;
+    }
+
+
+    /* ABOUT */
+
+    .about-grid{
+
+        gap:15px;
+    }
+
+    .about-card{
+
+        padding:23px 19px;
+
+        border-radius:19px;
+    }
+
+    .about-card h3{
+
+        font-size:22px;
+
+        margin-bottom:15px;
+    }
+
+    .about-card p{
+
+        font-size:13px;
+
+        line-height:1.8;
+    }
+
+    .feature-list{
+
+        gap:11px;
+    }
+
+    .feature{
+
+        padding:18px;
+
+        border-radius:16px;
+    }
+
+    .feature h4{
+
+        font-size:14px;
+    }
+
+    .feature p{
+
+        font-size:12px;
+
+        line-height:1.6;
+    }
+
+
+    /* PRIZES */
+
+    .prize-grid{
+
+        grid-template-columns:1fr;
+
+        gap:13px;
+    }
+
+    .prize{
+
+        padding:27px 18px;
+
+        border-radius:19px;
+    }
+
+    .prize .rank{
+
+        font-size:11px;
+
+        letter-spacing:2px;
+    }
+
+    .prize h3{
+
+        font-size:38px;
+
+        margin:12px 0;
+    }
+
+    .prize p{
+
+        font-size:12px;
+    }
+
+
+    /* RULES */
+
+    .rules{
+
+        gap:10px;
+    }
+
+    .rule{
+
+        padding:17px 15px;
+
+        gap:12px;
+
+        border-radius:17px;
+    }
+
+    .rule-number{
+
+        min-width:32px;
+
+        width:32px;
+
+        height:32px;
+
+        font-size:12px;
+    }
+
+    .rule p{
+
+        font-size:12px;
+
+        line-height:1.7;
+    }
+
+
+    /* TIMELINE */
+
+    .timeline{
+
+        width:100%;
+    }
+
+    .timeline::before{
+
+        left:8px;
+
+        width:2px;
+    }
+
+    .timeline-item,
+    .timeline-item:nth-child(even),
+    .timeline-item:nth-child(odd){
+
+        width:100%;
+
+        left:0;
+
+        text-align:left;
+
+        padding:
+            8px 0 8px 30px;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-dot,
+    .timeline-item:nth-child(even) .timeline-dot{
+
+        left:2px;
+
+        right:auto;
+
+        top:27px;
+
+        width:12px;
+
+        height:12px;
+    }
+
+    .timeline-card{
+
+        padding:17px;
+
+        border-radius:17px;
+    }
+
+    .timeline-card .time{
+
+        font-size:11px;
+
+        margin-bottom:6px;
+    }
+
+    .timeline-card h3{
+
+        font-size:16px;
+
+        margin-bottom:6px;
+    }
+
+    .timeline-card p{
+
+        font-size:12px;
+
+        line-height:1.6;
+    }
+
+
+    /* MENTORS */
+
+    .people-grid{
+
+        grid-template-columns:1fr;
+
+        gap:13px;
+    }
+
+    .person{
+
+        padding:22px 17px;
+
+        border-radius:18px;
+    }
+
+    .avatar{
+
+        width:70px;
+
+        height:70px;
+
+        font-size:23px;
+    }
+
+    .person h3{
+
+        margin-top:13px;
+
+        font-size:16px;
+    }
+
+    .person .role{
+
+        font-size:11px;
+    }
+
+    .person p{
+
+        font-size:11px;
+
+        line-height:1.6;
+    }
+
+
+    /* COORDINATORS */
+
+    .coordinator-grid{
+
+        gap:12px;
+    }
+
+    .coordinator{
+
+        padding:21px 18px;
+
+        border-radius:18px;
+    }
+
+    .coordinator h3{
+
+        font-size:16px;
+
+        margin-bottom:11px;
+    }
+
+    .coordinator p{
+
+        font-size:12px;
+
+        line-height:1.7;
+    }
+
+
+    /* LOCATION */
+
+    .location{
+
+        gap:13px;
+    }
+
+    .address{
+
+        padding:23px 19px;
+
+        border-radius:19px;
+    }
+
+    .address h3{
+
+        font-size:23px;
+
+        margin-bottom:15px;
+    }
+
+    .address p{
+
+        font-size:12px;
+
+        line-height:1.8;
+    }
+
+    .address .btn{
+
+        width:100%;
+
+        text-align:center;
+
+        font-size:12px;
+
+        padding:12px 15px;
+    }
+
+    .map{
+
+        min-height:270px;
+
+        border-radius:19px;
+    }
+
+    .map iframe{
+
+        min-height:270px;
+    }
+
+
+    /* CTA */
+
+    .cta{
+
+        padding-top:55px;
+
+        padding-bottom:55px;
+    }
+
+    .cta-box{
+
+        padding:48px 18px;
+
+        border-radius:21px;
+    }
+
+    .cta-box::before{
+
+        width:250px;
+
+        height:250px;
+    }
+
+    .cta h2{
+
+        font-size:
+            clamp(35px,11vw,52px);
+
+        line-height:1;
+    }
+
+    .cta p{
+
+        font-size:12px;
+
+        line-height:1.7;
+
+        margin-bottom:22px;
+    }
+
+    .cta .nav-register{
+
+        width:100%;
+
+        max-width:260px;
+
+        padding:13px;
+
+        font-size:13px;
+    }
+
+
+    /* FOOTER */
+
+    footer{
+
+        padding:35px 15px;
+    }
+
+    footer h3{
+
+        font-size:20px;
+    }
+
+    footer p{
+
+        font-size:10px;
+
+        line-height:1.6;
+    }
+
+    .footer-links{
+
+        gap:8px 15px;
+
+        margin-top:17px;
+
+        font-size:11px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media(max-width:380px){
+
+    .hero h1{
+
+        font-size:48px;
+
+        letter-spacing:-3px;
+    }
+
+    .hero h2{
+
+        font-size:13px;
+    }
+
+    .hero p{
+
+        font-size:12px;
+    }
+
+    .time-box strong{
+
+        font-size:24px;
+    }
+
+    .section-head h2{
+
+        font-size:28px;
+    }
+
+    .about-card h3{
+
+        font-size:20px;
+    }
+}
+/* =========================================
+   HACKFEST PREMIUM MOBILE NAVBAR
+========================================= */
+
+@media (max-width: 768px) {
+
+    /* NAVBAR */
+    nav,
+    .navbar {
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        right: 12px;
+
+        width: auto;
+        height: 62px;
+
+        padding: 0 16px;
+
+        border-radius: 18px;
+
+        background: rgba(7, 10, 25, 0.78);
+
+        border: 1px solid rgba(255, 255, 255, 0.12);
+
+        backdrop-filter: blur(22px);
+        -webkit-backdrop-filter: blur(22px);
+
+        box-shadow:
+            0 10px 35px rgba(0, 0, 0, 0.35),
+            0 0 25px rgba(0, 238, 255, 0.06);
+
+        z-index: 9999;
+    }
+
+
+    /* NAV INNER */
+    nav .container,
+    .navbar .container {
+        height: 100%;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+
+    /* LOGO */
+    nav .logo,
+    .navbar .logo {
+        position: relative;
+
+        font-size: 20px !important;
+        font-weight: 900;
+
+        letter-spacing: 1.5px;
+
+        white-space: nowrap;
+
+        background: linear-gradient(
+            90deg,
+            #00f5ff,
+            #7c5cff,
+            #ff3cac
+        );
+
+        -webkit-background-clip: text;
+        background-clip: text;
+
+        -webkit-text-fill-color: transparent;
+
+        text-shadow:
+            0 0 20px rgba(0, 245, 255, 0.25);
+    }
+
+
+    /* =====================================
+       HAMBURGER BUTTON
+    ===================================== */
+
+    .menu-toggle,
+    .hamburger,
+    .mobile-menu-btn {
+        width: 42px;
+        height: 42px;
+
+        display: flex !important;
+
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        gap: 5px;
+
+        border: 1px solid rgba(0, 245, 255, 0.22);
+
+        border-radius: 12px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(0, 245, 255, 0.10),
+                rgba(155, 92, 255, 0.10)
+            );
+
+        cursor: pointer;
+
+        flex-shrink: 0;
+
+        transition: 0.3s ease;
+    }
+
+
+    .menu-toggle span,
+    .hamburger span,
+    .mobile-menu-btn span {
+        display: block;
+
+        width: 20px;
+        height: 2px;
+
+        border-radius: 10px;
+
+        background: #ffffff;
+
+        box-shadow:
+            0 0 8px rgba(0, 245, 255, 0.7);
+
+        transition: 0.3s ease;
+    }
+
+
+    .menu-toggle:hover,
+    .hamburger:hover,
+    .mobile-menu-btn:hover {
+        transform: scale(1.05);
+
+        border-color: rgba(0, 245, 255, 0.55);
+
+        box-shadow:
+            0 0 20px rgba(0, 245, 255, 0.15);
+    }
+
+
+    /* =====================================
+       NAV LINKS CONTAINER
+    ===================================== */
+
+    nav .nav-links,
+    .navbar .nav-links {
+        position: absolute;
+
+        top: 72px;
+        left: 0;
+        right: 0;
+
+        width: 100%;
+
+        display: none;
+
+        flex-direction: column;
+
+        gap: 5px;
+
+        padding: 12px;
+
+        border-radius: 20px;
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(8, 12, 30, 0.97),
+                rgba(18, 12, 40, 0.97)
+            );
+
+        border: 1px solid rgba(255, 255, 255, 0.12);
+
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+
+        box-shadow:
+            0 20px 50px rgba(0, 0, 0, 0.55),
+            0 0 30px rgba(0, 245, 255, 0.08);
+
+        animation: mobileNavOpen 0.3s ease;
+    }
+
+
+    /* SHOW MENU */
+    nav .nav-links.active,
+    .navbar .nav-links.active,
+    nav .nav-links.show,
+    .navbar .nav-links.show {
+        display: flex;
+    }
+
+
+    /* =====================================
+       NAV LINK
+    ===================================== */
+
+    nav .nav-links a,
+    .navbar .nav-links a {
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+
+        min-height: 48px;
+
+        padding: 0 16px;
+
+        border-radius: 12px;
+
+        color: rgba(255, 255, 255, 0.78);
+
+        font-size: 13px;
+        font-weight: 700;
+
+        letter-spacing: 0.5px;
+
+        text-decoration: none;
+
+        transition: 0.3s ease;
+    }
+
+
+    nav .nav-links a:hover,
+    .navbar .nav-links a:hover {
+        color: #ffffff;
+
+        background:
+            linear-gradient(
+                90deg,
+                rgba(0, 245, 255, 0.12),
+                rgba(155, 92, 255, 0.12),
+                rgba(255, 60, 172, 0.10)
+            );
+
+        transform: translateX(4px);
+
+        box-shadow:
+            inset 3px 0 0 #00f5ff,
+            0 0 18px rgba(0, 245, 255, 0.08);
+    }
+
+
+    /* =====================================
+       REGISTER BUTTON
+    ===================================== */
+
+    nav .register-btn,
+    .navbar .register-btn,
+    nav .nav-links .register,
+    .navbar .nav-links .register {
+        justify-content: center;
+
+        margin-top: 5px;
+
+        min-height: 48px;
+
+        color: #ffffff !important;
+
+        border-radius: 12px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #00cfff,
+                #635bff,
+                #ff3cac
+            );
+
+        box-shadow:
+            0 8px 25px rgba(0, 207, 255, 0.18);
+
+        -webkit-text-fill-color: #ffffff !important;
+    }
+
+
+    nav .register-btn:hover,
+    .navbar .register-btn:hover {
+        transform: translateY(-2px) !important;
+
+        box-shadow:
+            0 10px 30px rgba(0, 207, 255, 0.28),
+            0 0 25px rgba(255, 60, 172, 0.15);
+    }
+
+
+    /* =====================================
+       HIDE DESKTOP MENU
+    ===================================== */
+
+    nav .nav-links:not(.active) a,
+    .navbar .nav-links:not(.active) a {
+        opacity: 1;
+    }
+
+
+    /* =====================================
+       MENU ANIMATION
+    ===================================== */
+
+    @keyframes mobileNavOpen {
+
+        from {
+            opacity: 0;
+            transform: translateY(-10px) scale(0.98);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+}
+
+
+/* =========================================
+   VERY SMALL MOBILE
+========================================= */
+
+@media (max-width: 420px) {
+
+    nav,
+    .navbar {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+
+        height: 58px;
+
+        padding: 0 12px;
+
+        border-radius: 16px;
+    }
+
+
+    nav .logo,
+    .navbar .logo {
+        font-size: 18px !important;
+        letter-spacing: 1px;
+    }
+
+
+    .menu-toggle,
+    .hamburger,
+    .mobile-menu-btn {
+        width: 38px;
+        height: 38px;
+    }
+
+
+    .menu-toggle span,
+    .hamburger span,
+    .mobile-menu-btn span {
+        width: 18px;
+    }
+
+
+    nav .nav-links,
+    .navbar .nav-links {
+        top: 67px;
+
+        padding: 10px;
+
+        border-radius: 17px;
+    }
+
+
+    nav .nav-links a,
+    .navbar .nav-links a {
+        min-height: 45px;
+
+        font-size: 12px;
+    }
+}
+
+
+/* =========================================
+   SCROLL EFFECT
+========================================= */
+
+@media (max-width: 768px) {
+
+    nav.scrolled,
+    .navbar.scrolled {
+        background: rgba(5, 7, 20, 0.94);
+
+        border-color: rgba(0, 245, 255, 0.18);
+
+        box-shadow:
+            0 12px 40px rgba(0, 0, 0, 0.5),
+            0 0 25px rgba(0, 245, 255, 0.08);
+    }
+}
+/* ======================================================
+   HACKFEST THEMES
+====================================================== */
+
+#themes {
+    padding: 100px 0;
+    position: relative;
+}
+
+.themes-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+    margin-top: 45px;
+}
+
+.theme-card {
+    position: relative;
+    padding: 28px 22px;
+    min-height: 270px;
+    overflow: hidden;
+    border-radius: 22px;
+    transition: all .45s ease;
+    cursor: pointer;
+}
+
+.theme-card::before {
+    content: "";
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    top: -70px;
+    right: -70px;
+    background: #00eaff;
+    filter: blur(60px);
+    opacity: .12;
+    transition: .5s;
+}
+
+.theme-card:hover {
+    transform: translateY(-12px);
+    border-color: rgba(0,234,255,.5);
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.35),
+        0 0 30px rgba(0,234,255,.12);
+}
+
+.theme-card:hover::before {
+    transform: scale(2);
+    opacity: .25;
+}
+
+.theme-number {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #8dffda;
+    margin-bottom: 22px;
+}
+
+.theme-icon {
+    width: 58px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    font-size: 27px;
+    margin-bottom: 20px;
+    background: rgba(0,234,255,.08);
+    border: 1px solid rgba(0,234,255,.2);
+    transition: .4s;
+}
+
+.theme-card:hover .theme-icon {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 0 25px rgba(0,234,255,.2);
+}
+
+.theme-card h3 {
+    font-size: 18px;
+    line-height: 1.3;
+    margin: 0 0 12px;
+}
+
+.theme-card p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(255,255,255,.62);
+    margin: 0;
+}
+
+.theme-line {
+    position: absolute;
+    left: 22px;
+    right: 22px;
+    bottom: 20px;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        #00eaff,
+        #9b5cff,
+        transparent
+    );
+    transform: scaleX(.25);
+    transform-origin: left;
+    transition: .45s;
+}
+
+.theme-card:hover .theme-line {
+    transform: scaleX(1);
+}
+
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
+
+@media (max-width: 1100px) {
+
+    .themes-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    #themes {
+        padding: 70px 0;
+    }
+
+    .themes-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .theme-card {
+        min-height: 240px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<!-- BACKGROUND ORBS AND GRID -->
+<div class="background">
+    <div class="grid"></div>
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+    <div class="particles">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+</div>
+
+<div id="introScreen"> <!-- Animated Background --> <div class="intro-bg"></div> <div class="intro-grid"></div> <div class="intro-orb intro-orb-1"></div> <div class="intro-orb intro-orb-2"></div> <div class="intro-orb intro-orb-3"></div> <!-- Particles --> <div class="intro-particles"> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> </div> <!-- Main Content --> <div class="intro-content"> <!-- Top Line --> <div class="intro-top-line"> <span></span> <p>WELCOME TO</p> <span></span> </div> <!-- Event Name --> <div class="intro-name-wrapper"> <div class="intro-small-text"> ✦ DEPARTMENT OF COMPUTER APPLICATION ✦ </div> <h1 class="intro-event-name"> HACK<span>FEST</span> </h1> <div class="intro-underline"></div> </div> <!-- Tagline --> <p class="intro-tagline"> CODE • CREATE • INNOVATE </p> <!-- Event Type --> <div class="intro-event-type"> <span>6 HR</span> <b>HACKATHON</b> </div> <!-- Loading --> <div class="intro-loading"> <div class="loading-text"> <span>INITIALIZING EXPERIENCE</span> <span id="loadingPercent">0%</span> </div> <div class="loading-bar"> <div class="loading-progress"></div> </div> </div> <!-- Bottom --> <div class="intro-footer"> 
+    <span>SHREE VENKATESHWARA</span> <div class="intro-dot"></div> 
+    <span>ARTS & SCIENCE</span> </div> </div> </div>
+
+
+<!-- ======================================================
+     NAVBAR
+====================================================== -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        HACKFEST
+    </div>
+
+    <button
+        class="menu-btn"
+        onclick="toggleMenu()"
+        aria-label="Open menu"
+    >
+        ☰
+    </button>
+
+    <div class="nav-links" id="navLinks">
+
+        <a href="#home">Home</a>
+
+        <a href="#about">About</a>
+
+        <a href="#prizes">Prizes</a>
+
+        <a href="#rules">Rules</a>
+
+        <a href="#timeline">Timeline</a>
+
+        <a href="#visit">Visit</a>
+
+       
+
+        <a
+            class="nav-register"
+            href="/register"
+        >
+            Register Now
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ======================================================
+     HERO
+====================================================== -->
+
+<section class="hero" id="home">
+
+    <div class="hero-content reveal">
+
+        <div class="badge">
+            ✦ DEPARTMENT OF COMPUTER APPLICATIONS✦
+        </div>
+
+        <h1>
+            HACKFEST
+        </h1>
+
+        <h2>
+            INNOVATE • CREATE • COLLABORATE
+        </h2>
+
+        <p>
+            A platform for students and tech enthusiasts
+            to challenge themselves, collaborate with
+            creators, transform bold ideas into innovative
+            solutions and showcase their creativity.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a
+                class="nav-register"
+                href="/registerl"
+            >
+                Register Now
+            </a>
+            <a href="/admin-login" class="admin-btn">
+    ADMIN
+</a>
+
+        </div>
+
+        <!-- COUNTDOWN TIMER CONTAINER -->
+        <div class="hackfest-countdown">
+            <div class="countdown-title">
+                <div class="pulse-dot"></div>
+                Event Starts In
+                <div class="pulse-dot"></div>
+            </div>
+            <div class="countdown">
+                <div class="time-box">
+                    <strong id="days">00</strong>
+                    <span>DAYS</span>
+                </div>
+                <div class="time-box">
+                    <strong id="hours">00</strong>
+                    <span>HOURS</span>
+                </div>
+                <div class="time-box">
+                    <strong id="minutes">00</strong>
+                    <span>MINS</span>
+                </div>
+                <div class="time-box">
+                    <strong id="seconds">00</strong>
+                    <span>SECS</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     ABOUT
+====================================================== -->
+
+<section id="about">
+
+    <div class="container">
+
+        <div class="section-head reveal">
+
+            <div class="mini">
+                The Experience
+            </div>
+
+            <h2>
+                Build Without Limits.
+            </h2>
+
+            <p>
+                Innovate. Collaborate. Create.
+            </p>
+
+        </div>
+
+
+        <div class="about-grid">
+
+            <div class="glass about-card reveal">
+
+                <h3>
+                    What is HACKFEST?
+                </h3>
+
+                <p>
+                    HACKFEST is a hackathon that brings
+                    students and tech enthusiasts together
+                    to create innovative solutions, solve
+                    real-world problems, and showcase their
+                    technical skills through teamwork and
+                    creativity.
+                </p>
+
+                <br>
+
+                <p>
+                    Participants team up with fellow creators,
+                    transform bold ideas into innovative
+                    projects and demonstrate their creativity,
+                    technical skills, collaboration and
+                    problem-solving ability.
+                </p>
+
+                <br>
+
+                <p>
+                    Your imagination is the boundary.
+                </p>
+
+            </div>
+
+
+            <div class="feature-list">
+
+                <div class="feature glass reveal">
+
+                    <h4>
+                        🏆 Great Prize Pools
+                    </h4>
+
+                    <p>
+                        Generous rewards for winning innovations.
+                    </p>
+
+                </div>
+
+
+                <div class="feature glass reveal">
+
+                    <h4>
+                        ⚡ Innovation
+                    </h4>
+
+                    <p>
+                        Turn creative ideas into practical solutions.
+                    </p>
+
+                </div>
+
+
+                <div class="feature glass reveal">
+
+                    <h4>
+                        ∞ Infinite Creativity
+                    </h4>
+
+                    <p>
+                        Think beyond boundaries and build something unique.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+
+<!-- ======================================================
+     HACKFEST THEMES
+====================================================== -->
+
+<section id="themes">
+
+    <div class="container">
+
+        <div class="section-head reveal">
+
+            <div class="mini">
+                HACKFEST 2026
+            </div>
+
+            <h2>
+                Explore The Themes.
+            </h2>
+
+            <p>
+                Choose your challenge. Build your innovation.
+            </p>
+
+        </div>
+
+
+        <div class="themes-grid">
+
+
+            <!-- THEME 01 -->
+
+            <div class="theme-card glass reveal">
+
+                <div class="theme-number">
+                    01
+                </div>
+
+                <div class="theme-icon">
+                    📊
+                </div>
+
+                <h3>
+                    Predictive Analytics
+                </h3>
+
+                <p>
+                    Use data and intelligent models to predict future trends and outcomes.
+                </p>
+
+                <span class="theme-line"></span>
+
+            </div>
+
+
+            <!-- THEME 02 -->
+
+            <div class="theme-card glass reveal">
+
+                <div class="theme-number">
+                    02
+                </div>
+
+                <div class="theme-icon">
+                    🛡️
+                </div>
+
+                <h3>
+                    Cybersecurity & Digital
+                </h3>
+
+                <p>
+                    Build innovative solutions for digital security, privacy and protection.
+                </p>
+
+                <span class="theme-line"></span>
+
+            </div>
+
+
+            <!-- THEME 03 -->
+
+            <div class="theme-card glass reveal">
+
+                <div class="theme-number">
+                    03
+                </div>
+
+                <div class="theme-icon">
+                    🤖
+                </div>
+
+                <h3>
+                    AI & Smart Automation
+                </h3>
+
+                <p>
+                    Create smart AI-powered solutions that automate real-world challenges.
+                </p>
+
+                <span class="theme-line"></span>
+
+            </div>
+
+
+            <!-- THEME 04 -->
+
+            <div class="theme-card glass reveal">
+
+                <div class="theme-number">
+                    04
+                </div>
+
+                <div class="theme-icon">
+                    🚨
+                </div>
+
+                <h3>
+                    Disaster Management
+                </h3>
+
+                <p>
+                    Develop technology-driven solutions for disaster prevention and response.
+                </p>
+
+                <span class="theme-line"></span>
+
+            </div>
+
+
+            <!-- THEME 05 -->
+
+            <div class="theme-card glass reveal">
+
+                <div class="theme-number">
+                    05
+                </div>
+
+                <div class="theme-icon">
+                    🚚
+                </div>
+
+                <h3>
+                    Transportation & Logistics
+                </h3>
+
+                <p>
+                    Innovate smarter, safer and more efficient transportation systems.
+                </p>
+
+                <span class="theme-line"></span>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ======================================================
+     HACKFEST POSTER
+====================================================== -->
+
+<div class="hackfest-poster-wrap reveal">
+
+    <div class="poster-glow"></div>
+
+    <div class="poster-frame">
+
+        <div class="poster-corner corner-tl"></div>
+        <div class="poster-corner corner-tr"></div>
+        <div class="poster-corner corner-bl"></div>
+        <div class="poster-corner corner-br"></div>
+
+      <img 
+    src="{{ url_for('static', filename='images/pic.jpeg') }}"
+    alt="HACKFEST Event Poster"
+    class="hackfest-poster"
+>
+    </div>
+
+    <div class="poster-label">
+        <span>✦</span>
+        HACKFEST • 6 HR HACKATHON
+        <span>✦</span>
+    </div>
+
+</div>
+
+
+<!-- ================================ PREMIUM PRIZES SECTION ================================ --> <section class="prizes-section" id="prizes"> 
+    <div class="container"> <div class="section-head">
+         <div class="section-tag">🏆 REWARDS</div>
+          <h2>Prize <span>Pool</span></h2> <p>Compete. Create. Conquer. Take home the glory.</p>
+         </div> <div class="prize-grid"> <!-- 2nd Prize --> <div class="prize-card silver">
+             <div class="medal-glow"></div> <div class="medal medal-silver"> <div class="medal-ribbon">
+
+             </div> <div class="medal-circle"> <span class="medal-number">2</span> <span class="medal-star">★</span> </div> 
+            </div> <div class="prize-rank">2ND PRIZE</div> <h3>₹2,000</h3> <div class="prize-line"></div> <p> Silver Medal<br> + Certificate </p> 
+            <div class="shine"></div> </div> <!-- 1st Prize --> <div class="prize-card gold first-prize"> <div class="winner-badge"> ✦ CHAMPION ✦ </div>
+             <div class="medal-glow"></div> <div class="medal medal-gold"> <div class="medal-ribbon"></div> <div class="medal-circle"> <span class="medal-number">1</span> <span class="medal-star">★</span> </div> </div> <div class="prize-rank">1ST PRIZE</div> <h3>₹3,000</h3> <div class="prize-line"></div> <p> Gold Medal<br> + Certificate </p> <div class="shine"></div> </div> <!-- 3rd Prize --> <div class="prize-card bronze"> <div class="medal-glow"></div> <div class="medal medal-bronze"> <div class="medal-ribbon"></div> <div class="medal-circle"> <span class="medal-number">3</span> <span class="medal-star">★</span> </div> </div> <div class="prize-rank">3RD PRIZE</div> <h3>₹1,000</h3> <div class="prize-line"></div> <p> Bronze Medal<br> + Certificate </p> <div class="shine"></div> </div> </div> </div> </section>
+<!-- ======================================================
+     RULES
+====================================================== -->
+
+<section id="rules">
+
+    <div class="container">
+
+        <div class="section-head reveal">
+
+            <div class="mini">
+                Read Carefully
+            </div>
+
+            <h2>
+                Rules & Regulations.
+            </h2>
+
+            <p>
+                Everything participants need to know
+                before entering HACKFEST.
+            </p>
+
+        </div>
+
+
+        <div class="rules">
+
+
+            <div class="rule glass reveal">
+
+                <div class="rule-number">   
+                    01
+                </div>                                                                      
+
+
+                <p>
+                    Bring your own laptop, laptop not provided.
+                </p>
+
+            </div>
+
+
+            <div class="rule glass reveal">
+
+                <div class="rule-number">
+                    02
+                </div>
+
+                <p>
+                    Compulsory registered members can allowed no sport registration.
+                </p>
+
+            </div>
+
+
+            <div class="rule glass reveal">
+
+                <div class="rule-number">
+                    03
+                </div>
+
+                <p>
+                    Id card must and bona fide optional.
+                </p>
+
+            </div>
+
+
+            <div class="rule glass reveal">
+
+                <div class="rule-number">
+                    04
+                </div>
+
+                <p>
+                    Team members compulsory minimum 3 and maximum 5 .
+
+            </div>
+
+
+            <div class="rule glass reveal">
+
+                <div class="rule-number">
+                    05
+                </div>
+
+                <p>
+                    All code works should be completed with in given time 
+                </p>
+
+            </div>
+
+
+            <div class="rule glass reveal">
+
+                <div class="rule-number">
+                    06
+                </div>
+
+                <p>
+                    once themes will select cannot be changed on spot
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     TIMELINE
+====================================================== -->
+
+<section id="timeline">
+
+    <div class="container">
+
+        <div class="section-head reveal">
+
+            <div class="mini">
+                Event Schedule
+            </div>
+
+            <h2>
+                The Timeline.
+            </h2>
+
+            <p>
+                From the opening ceremony to the final celebration.
+            </p>
+
+        </div>
+
+
+        <div class="timeline">
+
+
+            <!-- 01 -->
+
+            <div class="timeline-item reveal">
+
+                <div class="timeline-dot"></div>
+
+                <div class="timeline-card glass">
+
+                    <div class="time">
+                        8:45 AM – 9:00 AM
+                    </div>
+
+                    <h3>
+                        Prayer Song
+                    </h3>
+
+                    <p>
+                        The event begins with the prayer song.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- 02 -->
+
+            <div class="timeline-item reveal">
+
+                <div class="timeline-dot"></div>
+
+                <div class="timeline-card glass">
+
+                    <div class="time">
+                        9:00 AM – 9:10 AM
+                    </div>
+
+                    <h3>
+                        Welcome Address
+                    </h3>
+
+                    <p>
+                        Welcome address to all participants, guests and dignitaries.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- 03 -->
+
+            <div class="timeline-item reveal">
+
+                <div class="timeline-dot"></div>
+
+                <div class="timeline-card glass">
+
+                    <div class="time">
+                        9:10 AM – 9:25 AM
+                    </div>
+
+                    <h3>
+                        Guest Speech
+                    </h3>
+
+                    <p>
+                        An inspiring address from our special guest.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- 04 -->
+
+            <div class="timeline-item reveal">
+
+                <div class="timeline-dot"></div>
+
+                <div class="timeline-card glass">
+
+                    <div class="time">
+                        9:25 AM – 10:00 AM
+                    </div>
+
+                    <h3>
+                        Rules Explanation
+                    </h3>
+
+                    <p>
+                        Important hackathon rules, guidelines and instructions will be explained.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- 05 -->
+
+            <div class="timeline-item reveal">
+
+                <div class="timeline-dot"></div>
+
+                <div class="timeline-card glass">
+
+                    <div class="time">
+                        10:00 AM – 10:15 AM
+                    </div>
+
+                    <h3>
+                        Problem Selection
+                    </h3>
+
+                    <p>
+                        Teams select their problem statement and prepare to build.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- 06 -->
+
+            <div class="timeline-item reveal">
+
+                <div class="timeline-dot"></div>
+
+                <div class="timeline-card glass">
+
+                    <div class="time">
+                        10:15 AM
+                    </div>
+
+                    <h3>
+                        Start Building
+                    </h3>
+
+                    <p>
+                        The HACKFEST building phase officially begins.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- 07 -->
+
+            <div class="timeline-item reveal">
+
+                <div class="timeline-dot"></div>
+
+                <div class="timeline-card glass">
+
+                    <div class="time">
+                        10:40 AM – 10:55 AM
+                    </div>
+
+                    <h3>
+                        Refreshment
+                    </h3>
+
+                    <p>
+                        A short refreshment break for all participants.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- 08 -->
+
+            <div class="timeline-item reveal">
+
+                <div class="timeline-dot"></div>
+
+                <div class="timeline-card glass">
+
+                    <div class="time">
+                        1:30 PM – 2:10 PM
+                    </div>
+
+                    <h3>
+                        Lunch
+                    </h3>
+
+                    <p>
+                        Lunch break for participants and teams.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- 09 -->
+
+            <div class="timeline-item reveal">
+
+                <div class="timeline-dot"></div>
+
+                <div class="timeline-card glass">
+
+                    <div class="time">
+                        3:00 PM – 3:15 PM
+                    </div>
+
+                    <h3>
+                        Refreshment
+                    </h3>
+
+                    <p>
+                        Afternoon refreshment break.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- 10 -->
+
+            <div class="timeline-item reveal">
+
+                <div class="timeline-dot"></div>
+
+                <div class="timeline-card glass">
+
+                    <div class="time">
+                        3:15 PM – 3:30 PM
+                    </div>
+
+                    <h3>
+                        Preparation
+                    </h3>
+
+                    <p>
+                        Teams get ready for the final evaluation.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- 11 -->
+
+            <div class="timeline-item reveal">
+
+                <div class="timeline-dot"></div>
+
+                <div class="timeline-card glass">
+
+                    <div class="time">
+                        3:30 PM – 4:30 PM
+                    </div>
+
+                    <h3>
+                        Judgement & Prize Distribution
+                    </h3>
+
+                    <p>
+                        Final judgement followed by prize distribution and recognition.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- 12 -->
+
+            <div class="timeline-item reveal">
+
+                <div class="timeline-dot"></div>
+
+                <div class="timeline-card glass">
+
+                    <div class="time">
+                        4:30 PM – 4:40 PM
+                    </div>
+
+                    <h3>
+                        Vote of Thanks
+                    </h3>
+
+                    <p>
+                        Closing the event with a heartfelt vote of thanks.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div
+            class="reveal"
+            style="
+                margin-top:35px;
+                padding:18px;
+                text-align:center;
+                color:#8dffda;
+                border:1px solid rgba(141,255,218,.2);
+                background:rgba(141,255,218,.04);
+                border-radius:15px;
+            "
+        >
+            🍽 Refreshments and lunch will be provided
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     COORDINATORS
+====================================================== -->
+
+<section>
+
+    <div class="container">
+
+        <div class="section-head reveal">
+
+            <div class="mini">
+                The Team
+            </div>
+
+            <h2>
+                Event Coordinators.
+            </h2>
+
+        </div>
+
+
+        <div class="coordinator-grid">
+
+
+            <div class="coordinator glass reveal">
+
+                <h3>
+                    Head of Department
+                </h3>
+
+                <p>
+                    Dr. V.SURESH KUMAR<br>
+                    Head of the Department
+                     AP / COMPUTER APPLICATIONS
+                </p>
+
+            </div>
+
+
+            <div class="coordinator glass reveal">
+
+                <h3>
+                    Faculty Coordinators
+                </h3>
+
+                <p>
+                    Mrs.B.Karthikeyani<br>
+                    AP / COMPUTER APPLICATIONS
+                    9600475669
+
+                    <br><br>
+
+                   Mr.D.Shyamsundar<br>
+                   AP / COMPUTER APPLICATIONS
+                     9594167378
+                </p>
+
+            </div>
+
+
+            <div class="coordinator glass reveal">
+
+                <h3>
+                    Student Coordinators
+                </h3>
+
+                <p>
+                   Barathis.S<br>
+                   8760239543<br>
+                   Keshav.R<br>
+                  9363919049
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     VISIT / LOCATION
+====================================================== -->
+
+<section id="visit">
+
+    <div class="container">
+
+        <div class="section-head reveal">
+
+            <div class="mini">
+                Find Us
+            </div>
+
+            <h2>
+                Visit SVASC.
+            </h2>
+
+            <p>
+                Join us at gobi Shree venkateshwara arts and science College.
+            </p>
+
+        </div>
+
+
+        <div class="location">
+
+
+            <div class="address glass reveal">
+
+                <h3>
+                    Address
+                </h3>
+
+                <p>
+
+                    Department of Computer Application
+
+                    <br><br>
+
+                  SHREE VENKATESHWARA ARTS & SCIENCE COLLAGE
+
+                    <br><br>
+
+                    GOBICHETTIPALAIYAM,
+                    OTTHAKUDHIRAI,
+                    <br>
+
+                    Erode
+                    <br>
+
+                    Tamil Nadu, India
+
+                </p>
+
+                <br>
+
+                <a
+                    class="btn btn-primary"
+                    href="https://www.google.com/maps/search/?api=1&query=Erode+Sengunthar+Engineering+College"
+                    target="_blank"
+                >
+                    Open in Google Maps →
+                </a>
+
+            </div>
+
+
+            <div class="map glass reveal">
+
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3910.5662338863085!2d77.49622411020458!3d11.43899688870603!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba93f74fbffd7f1%3A0x5f904bce58cf37c2!2sShree%20Venkateshwara%20Arts%20and%20Science%20(Co-education)%20College!5e0!3m2!1sen!2sin!4v1789557175187!5m2!1sen!2sin"
+                    width="600"
+                    height="450"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                >
+                </iframe>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     REGISTER CTA
+====================================================== -->
+
+<section class="cta">
+
+    <div class="container">
+
+        <div class="cta-box glass reveal">
+
+            <div class="mini">
+                YOUR NEXT ADVENTURE STARTS HERE
+            </div>
+
+            <h2>
+                Ready to Create?
+            </h2>
+
+            <p>
+                Bring your team. Bring your ideas.
+                Build something unforgettable at HACKFEST.
+            </p>
+
+            <a
+                class="nav-register"
+                href="/register"
+            >
+                Register Now
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     FOOTER
+====================================================== -->
+
+<footer>
+
+    <h3>
+        HACKFEST
+    </h3>
+
+    <p>
+        HACKATHON
+    </p>
+
+    <p>
+        DEPARTMENT OF COMPUTER APPLICATION ✦
+    </p>
+
+
+    <div class="footer-links">
+
+        <a href="#home">
+            Home
+        </a>
+
+        <a href="#about">
+            About
+        </a>
+
+        <a href="#prizes">
+            Prizes
+        </a>
+
+        <a href="#rules">
+            Rules
+        </a>
+
+        <a href="#timeline">
+            Timeline
+        </a>
+
+        <a href="#mentors">
+            Mentors
+        </a>
+
+        <a href="#visit">
+            Visit
+        </a>
+
+    </div>
+
+
+    <p style="margin-top:25px;">
+
+        Presented by Department of Computer Application ✦
+
+        <br>
+
+        Gobi Shree Venkateshwara Arts and Science College
+
+        <br>
+
+        Cyber App Tech
+
+    </p>
+
+
+    <p>
+        © HACKFEST 2026 — All rights reserved.
+    </p>
+
+</footer>
+
+
+<!-- ======================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script>
+
+
+/* ========================================= HACKFEST INTRO LOADING % ========================================= */ let loadingPercent = 0; const loadingNumber = document.getElementById("loadingPercent"); const loadingTimer = setInterval(() => { loadingPercent += 1; if (loadingPercent >= 100) { loadingPercent = 100; clearInterval(loadingTimer); } if (loadingNumber) { loadingNumber.textContent = loadingPercent + "%"; } }, 28); /* ========================================= AUTO CLOSE INTRO ========================================= */ setTimeout(() => { const intro = document.getElementById("introScreen"); if (intro) { intro.classList.add("hide-intro"); } }, 3200);
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+function toggleMenu(){
+
+    document
+        .getElementById("navLinks")
+        .classList.toggle("active");
+
+}
+
+
+/* =====================================================
+   CLOSE MOBILE MENU
+===================================================== */
+
+document
+    .querySelectorAll(".nav-links a")
+    .forEach(link => {
+
+        link.addEventListener("click", () => {
+
+            document
+                .getElementById("navLinks")
+                .classList.remove("active");
+
+        });
+
+    });
+
+
+/* =====================================================
+   COUNTDOWN
+===================================================== */
+
+const eventDate =
+    new Date(
+        "OCTOBER 01, 2026 09:30:00"
+    ).getTime();
+
+
+function updateCountdown(){
+
+    const now =
+        new Date().getTime();
+
+    const difference =
+        eventDate - now;
+
+
+    if(difference <= 0){
+
+        if(document.getElementById("days")) document.getElementById("days").textContent = "00";
+        if(document.getElementById("hours")) document.getElementById("hours").textContent = "00";
+        if(document.getElementById("minutes")) document.getElementById("minutes").textContent = "00";
+        if(document.getElementById("seconds")) document.getElementById("seconds").textContent = "00";
+
+        return;
+    }
+
+
+    const days =
+        Math.floor(
+            difference /
+            (1000 * 60 * 60 * 24)
+        );
+
+
+    const hours =
+        Math.floor(
+            (difference /
+            (1000 * 60 * 60)) % 24
+        );
+
+
+    const minutes =
+        Math.floor(
+            (difference /
+            (1000 * 60)) % 60
+        );
+
+
+    const seconds =
+        Math.floor(
+            (difference /
+            1000) % 60
+        );
+
+
+    if(document.getElementById("days")) {
+        document.getElementById("days").textContent = String(days).padStart(2,"0");
+    }
+
+    if(document.getElementById("hours")) {
+        document.getElementById("hours").textContent = String(hours).padStart(2,"0");
+    }
+
+    if(document.getElementById("minutes")) {
+        document.getElementById("minutes").textContent = String(minutes).padStart(2,"0");
+    }
+
+    if(document.getElementById("seconds")) {
+        document.getElementById("seconds").textContent = String(seconds).padStart(2,"0");
+    }
+
+}
+
+
+updateCountdown();
+
+setInterval(
+    updateCountdown,
+    1000
+);
+
+
+/* =====================================================
+   SCROLL REVEAL
+===================================================== */
+
+const revealElements =
+    document.querySelectorAll(".reveal");
+
+
+const observer =
+    new IntersectionObserver(
+
+        entries => {
+
+            entries.forEach(entry => {
+
+                if(entry.isIntersecting){
+
+                    entry
+                        .target
+                        .classList
+                        .add("show");
+
+                }
+
+            });
+
+        },
+
+        {
+            threshold:.12
+        }
+
+    );
+
+
+revealElements.forEach(element => {
+
+    observer.observe(element);
+
+});
+
+
+/* =====================================================
+   MOUSE PARALLAX
+===================================================== */
+
+document.addEventListener(
+    "mousemove",
+    event => {
+
+        const x =
+            (
+                event.clientX /
+                window.innerWidth -
+                .5
+            ) * 20;
+
+
+        const y =
+            (
+                event.clientY /
+                window.innerHeight -
+                .5
+            ) * 20;
+
+
+        const orbOne = document.querySelector(".orb.one");
+        const orbTwo = document.querySelector(".orb.two");
+
+        if (orbOne) {
+            orbOne.style.transform = `translate(${x}px,${y}px)`;
+        }
+
+        if (orbTwo) {
+            orbTwo.style.transform = `translate(${-x}px,${-y}px)`;
+        }
+
+    }
+);
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const menuToggle =
+        document.querySelector(".menu-toggle") ||
+        document.querySelector(".hamburger") ||
+        document.querySelector(".mobile-menu-btn");
+
+    const navLinks =
+        document.querySelector(".nav-links");
+
+    if (!menuToggle || !navLinks) return;
+
+    menuToggle.addEventListener("click", function () {
+        navLinks.classList.toggle("active");
+    });
+
+
+    /* Close menu after clicking a link */
+
+    navLinks.querySelectorAll("a").forEach(function (link) {
+
+        link.addEventListener("click", function () {
+            navLinks.classList.remove("active");
+        });
+
+    });
+
+
+    /* Navbar scroll effect */
+
+    window.addEventListener("scroll", function () {
+
+        const navbar =
+            document.querySelector("nav") ||
+            document.querySelector(".navbar");
+
+        if (!navbar) return;
+
+        if (window.scrollY > 30) {
+            navbar.classList.add("scrolled");
+        } else {
+            navbar.classList.remove("scrolled");
+        }
+
+    });
+
+});
+
+
+</script>
+
+</body>
+</html>

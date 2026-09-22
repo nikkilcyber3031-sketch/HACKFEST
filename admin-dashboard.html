@@ -1,0 +1,1943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HACKFEST | Admin Dashboard</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    color:#fff;
+    background:
+        radial-gradient(circle at 10% 10%, rgba(0,234,255,.13), transparent 28%),
+        radial-gradient(circle at 90% 10%, rgba(155,92,255,.15), transparent 30%),
+        radial-gradient(circle at 50% 100%, rgba(255,60,172,.10), transparent 30%),
+        #050816;
+    overflow-x:hidden;
+}
+
+/* GRID BACKGROUND */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-2;
+
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+
+    background-size:45px 45px;
+}
+
+/* GLOW */
+
+body::after{
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+    left:-220px;
+    top:200px;
+
+    background:rgba(0,234,255,.07);
+    filter:blur(100px);
+    border-radius:50%;
+
+    z-index:-1;
+}
+
+/* TOP BAR */
+
+.top-bar{
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    height:75px;
+    padding:0 35px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    background:rgba(5,8,22,.82);
+    backdrop-filter:blur(20px);
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.logo{
+    width:42px;
+    height:42px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:12px;
+
+    color:#00eaff;
+    font-size:16px;
+    font-weight:900;
+
+    border:1px solid rgba(0,234,255,.5);
+
+    background:rgba(0,234,255,.08);
+
+    box-shadow:
+        0 0 20px rgba(0,234,255,.15);
+}
+
+.brand-text h2{
+    font-size:17px;
+    letter-spacing:2px;
+}
+
+.brand-text span{
+    color:#7e849b;
+    font-size:10px;
+    letter-spacing:1.5px;
+}
+
+.top-right{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.admin-status{
+    display:flex;
+    align-items:center;
+    gap:7px;
+
+    color:#bfc5d9;
+    font-size:12px;
+}
+
+.status-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#00ffae;
+    box-shadow:0 0 12px #00ffae;
+}
+
+.logout-btn{
+    border:1px solid rgba(255,70,120,.4);
+    background:rgba(255,70,120,.07);
+
+    color:#ff7b9f;
+
+    padding:10px 17px;
+    border-radius:10px;
+
+    font-size:11px;
+    font-weight:bold;
+    letter-spacing:1px;
+
+    cursor:pointer;
+    transition:.3s;
+}
+
+.logout-btn:hover{
+    background:#ff4775;
+    color:#fff;
+    box-shadow:0 0 25px rgba(255,71,117,.35);
+}
+
+/* MAIN */
+
+.container{
+    width:min(1400px,94%);
+    margin:auto;
+    padding:45px 0 70px;
+}
+
+/* HEADER */
+
+.dashboard-header{
+    margin-bottom:30px;
+}
+
+.badge{
+    display:inline-block;
+
+    padding:7px 13px;
+    border-radius:30px;
+
+    color:#00eaff;
+    border:1px solid rgba(0,234,255,.3);
+
+    background:rgba(0,234,255,.05);
+
+    font-size:10px;
+    font-weight:bold;
+    letter-spacing:2px;
+
+    margin-bottom:14px;
+}
+
+.dashboard-header h1{
+    font-size:clamp(30px,5vw,48px);
+    letter-spacing:-1px;
+}
+
+.dashboard-header h1 span{
+    color:#00eaff;
+}
+
+.dashboard-header p{
+    margin-top:10px;
+    color:#8c93aa;
+    font-size:13px;
+}
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:35px;
+}
+
+.stat-card{
+    position:relative;
+    padding:23px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.09);
+
+    backdrop-filter:blur(15px);
+
+    overflow:hidden;
+    transition:.3s;
+}
+
+.stat-card:hover{
+    transform:translateY(-4px);
+    border-color:rgba(0,234,255,.3);
+}
+
+.stat-icon{
+    font-size:22px;
+    margin-bottom:15px;
+}
+
+.stat-card h3{
+    font-size:28px;
+}
+
+.stat-card p{
+    margin-top:5px;
+    color:#858ca2;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+/* SECTION */
+
+.section-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:18px;
+}
+
+.section-title h2{
+    font-size:21px;
+}
+
+.section-title span{
+    color:#7e849b;
+    font-size:11px;
+}
+
+/* SEARCH */
+
+.search-box{
+    margin-bottom:20px;
+}
+
+.search-box input{
+    width:100%;
+    height:48px;
+
+    padding:0 18px;
+
+    border-radius:12px;
+
+    color:#fff;
+    outline:none;
+
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.1);
+
+    font-size:12px;
+}
+
+.search-box input:focus{
+    border-color:rgba(0,234,255,.5);
+    box-shadow:0 0 20px rgba(0,234,255,.07);
+}
+
+.search-box input::placeholder{
+    color:#656c82;
+}
+
+/* TEAM CARD */
+
+.teams-container{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.team-card{
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.025)
+        );
+
+    border:1px solid rgba(255,255,255,.09);
+
+    backdrop-filter:blur(18px);
+
+    overflow:hidden;
+
+    transition:.3s;
+}
+
+.team-card:hover{
+    border-color:rgba(0,234,255,.25);
+    box-shadow:0 15px 50px rgba(0,0,0,.25);
+}
+
+/* TEAM HEADER */
+
+.team-header{
+    padding:22px 24px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.team-main{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.team-number{
+    width:45px;
+    height:45px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:13px;
+
+    color:#00eaff;
+
+    background:rgba(0,234,255,.08);
+    border:1px solid rgba(0,234,255,.2);
+
+    font-weight:bold;
+}
+
+.team-info h3{
+    font-size:17px;
+}
+
+.team-info p{
+    margin-top:5px;
+    color:#858ca2;
+    font-size:11px;
+}
+
+.payment-status{
+    padding:7px 12px;
+    border-radius:30px;
+
+    font-size:9px;
+    font-weight:bold;
+    letter-spacing:1px;
+
+    background:rgba(255,193,7,.08);
+    border:1px solid rgba(255,193,7,.25);
+    color:#ffc107;
+}
+
+/* TEAM BODY */
+
+.team-body{
+    padding:24px;
+}
+
+/* BASIC DETAILS */
+
+.details-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+
+    margin-bottom:25px;
+}
+
+.detail-box{
+    padding:15px;
+
+    background:rgba(0,0,0,.17);
+
+    border:1px solid rgba(255,255,255,.06);
+
+    border-radius:12px;
+}
+
+.detail-box label{
+    display:block;
+
+    color:#656c82;
+
+    font-size:9px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+
+    margin-bottom:7px;
+}
+
+.detail-box strong{
+    font-size:12px;
+    color:#dce2f2;
+}
+
+/* MEMBERS */
+
+.sub-heading{
+    font-size:12px;
+    letter-spacing:1.5px;
+
+    color:#00eaff;
+
+    margin-bottom:13px;
+}
+
+.members-table{
+    width:100%;
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:700px;
+}
+
+th{
+    text-align:left;
+
+    padding:12px;
+
+    color:#687087;
+
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+td{
+    padding:14px 12px;
+
+    font-size:11px;
+    color:#cdd3e3;
+
+    border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+td:first-child{
+    color:#00eaff;
+    font-weight:bold;
+}
+
+.leader-badge{
+    display:inline-block;
+
+    margin-left:6px;
+
+    padding:4px 7px;
+
+    border-radius:6px;
+
+    color:#00ffae;
+
+    background:rgba(0,255,174,.07);
+    border:1px solid rgba(0,255,174,.2);
+
+    font-size:8px;
+}
+
+/* PAYMENT */
+
+.payment-section{
+    margin-top:25px;
+}
+
+.payment-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.payment-info{
+    padding:20px;
+
+    border-radius:16px;
+
+    background:rgba(0,0,0,.18);
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.payment-row{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+
+    padding:12px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.payment-row:last-child{
+    border-bottom:0;
+}
+
+.payment-row span{
+    color:#737b92;
+    font-size:10px;
+}
+
+.payment-row strong{
+    color:#dce2f2;
+    font-size:11px;
+    text-align:right;
+}
+
+.amount{
+    color:#00ffae !important;
+    font-size:17px !important;
+}
+
+/* SCREENSHOT */
+
+.screenshot-box{
+    min-height:230px;
+
+    padding:15px;
+
+    border-radius:16px;
+
+    background:rgba(0,0,0,.18);
+    border:1px solid rgba(255,255,255,.07);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:10px;
+}
+
+.screenshot-box img{
+    max-width:100%;
+    max-height:320px;
+
+    border-radius:10px;
+
+    border:1px solid rgba(255,255,255,.1);
+
+    cursor:pointer;
+}
+
+.no-screenshot{
+    color:#626a80;
+    font-size:11px;
+    text-align:center;
+}
+
+/* EMPTY */
+
+.empty{
+    text-align:center;
+    padding:70px 20px;
+
+    border:1px dashed rgba(255,255,255,.12);
+    border-radius:20px;
+
+    color:#737b92;
+}
+
+.empty-icon{
+    font-size:40px;
+    margin-bottom:15px;
+}
+
+.empty h3{
+    color:#bfc5d9;
+    margin-bottom:7px;
+}
+
+.empty p{
+    font-size:11px;
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+
+    z-index:9999;
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    background:rgba(0,0,0,.82);
+    backdrop-filter:blur(10px);
+}
+
+.modal.active{
+    display:flex;
+}
+
+.modal img{
+    max-width:min(1000px,95vw);
+    max-height:90vh;
+
+    border-radius:15px;
+
+    box-shadow:0 0 70px rgba(0,234,255,.15);
+}
+
+.close-modal{
+    position:absolute;
+    top:25px;
+    right:30px;
+
+    width:42px;
+    height:42px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.15);
+
+    color:#fff;
+    font-size:18px;
+
+    cursor:pointer;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .details-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .payment-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:650px){
+
+    .top-bar{
+        height:68px;
+        padding:0 16px;
+    }
+
+    .brand-text{
+        display:none;
+    }
+
+    .admin-status{
+        display:none;
+    }
+
+    .container{
+        width:92%;
+        padding-top:30px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .stat-card{
+        padding:17px;
+    }
+
+    .stat-card h3{
+        font-size:22px;
+    }
+
+    .team-header{
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .team-main{
+        align-items:flex-start;
+    }
+
+    .team-header{
+        flex-direction:column;
+    }
+
+    .details-grid{
+        grid-template-columns:1fr;
+    }
+
+    .team-body{
+        padding:17px;
+    }
+
+    .team-info h3{
+        font-size:15px;
+    }
+}
+
+/* ================================
+   PAYMENT ACTION BUTTONS
+================================ */
+
+.payment-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+}
+
+.payment-actions button {
+    border: none;
+    padding: 11px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    letter-spacing: 0.3px;
+}
+/* ================================
+   PAYMENT STATUS BADGES
+================================ */
+
+.verified-badge,
+.rejected-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+.verified-badge {
+    background: rgba(0, 230, 118, 0.12);
+    border: 1px solid rgba(0, 230, 118, 0.45);
+    color: #00e676;
+    box-shadow: 0 0 15px rgba(0, 230, 118, 0.12);
+}
+
+.rejected-badge {
+    background: rgba(255, 23, 68, 0.12);
+    border: 1px solid rgba(255, 23, 68, 0.45);
+    color: #ff5252;
+    box-shadow: 0 0 15px rgba(255, 23, 68, 0.12);
+}
+
+.verify-btn {
+    background: linear-gradient(135deg, #00e676, #00bfa5);
+    color: #001b14;
+    box-shadow: 0 0 18px rgba(0, 230, 118, 0.25);
+}
+
+.verify-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 28px rgba(0, 230, 118, 0.45);
+}
+
+.reject-btn {
+    background: linear-gradient(135deg, #ff5252, #ff1744);
+    color: white;
+    box-shadow: 0 0 18px rgba(255, 23, 68, 0.22);
+}
+
+.reject-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 28px rgba(255, 23, 68, 0.45);
+}
+
+.payment-actions button:active {
+    transform: scale(0.96);
+}
+
+@media (max-width: 600px) {
+
+    .payment-actions {
+        flex-direction: column;
+    }
+
+    .payment-actions button {
+        width: 100%;
+    }
+
+}
+.payment-actions {
+    display: flex !important;
+    gap: 12px !important;
+    margin-top: 15px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.payment-actions button {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    padding: 12px 18px !important;
+    border: 2px solid white !important;
+    border-radius: 10px !important;
+    cursor: pointer !important;
+}
+
+.verify-btn {
+    background: #00c853 !important;
+    color: white !important;
+}
+
+.reject-btn {
+    background: #ff1744 !important;
+    color: white !important;
+}
+.download-excel-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 22px;
+    background: linear-gradient(135deg, #d4af37, #f5d76e);
+    color: #111;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.25);
+    transition: all 0.3s ease;
+}
+
+.download-excel-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(212, 175, 55, 0.4);
+}
+
+.download-excel-btn span {
+    font-size: 17px;
+}
+.clear-data-btn {
+    padding: 12px 20px;
+    border: 1px solid #ff4d4d;
+    border-radius: 10px;
+    background: #fff;
+    color: #d60000;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.clear-data-btn:hover {
+    background: #d60000;
+    color: white;
+    transform: translateY(-2px);
+}
+</style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+
+<header class="top-bar">
+
+    <div class="brand">
+
+        <div class="logo">HF</div>
+
+        <div class="brand-text">
+            <h2>HACKFEST</h2>
+            <span>ADMIN CONTROL PANEL</span>
+        </div>
+
+    </div>
+
+    <div class="top-right">
+
+        <div class="admin-status">
+            <span class="status-dot"></span>
+            ADMIN ONLINE
+        </div>
+
+        <button class="logout-btn" onclick="logout()">
+            LOGOUT
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <!-- HEADER -->
+
+    <section class="dashboard-header">
+
+        <span class="badge">
+            SECURE ADMIN PANEL
+        </span>
+
+        <h1>
+            HACKFEST <span>Dashboard</span>
+        </h1>
+
+        <p>
+            Manage registered teams, members and payment verification.
+        </p>
+
+    </section>
+
+
+    <!-- STATS -->
+
+    <section class="stats">
+
+        <div class="stat-card">
+
+            <div class="stat-icon">👥</div>
+
+            <h3 id="totalTeams">0</h3>
+
+            <p>Total Teams</p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">🧑‍💻</div>
+
+            <h3 id="totalMembers">0</h3>
+
+            <p>Total Members</p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">₹</div>
+
+            <h3 id="totalAmount">₹0</h3>
+
+            <p>Total Registration</p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">⏳</div>
+
+            <h3 id="pendingPayments">0</h3>
+
+            <p>Pending Payments</p>
+
+        </div>
+
+    </section>
+
+
+    <!-- TEAM LIST -->
+
+    <section>
+
+        <div class="section-title">
+
+            <h2>Registered Teams</h2>
+
+            <span id="teamCountText">0 Teams</span>
+
+        </div>
+        <a href="/admin/download-excel" class="download-excel-btn">
+    <span>📥</span>
+    DOWNLOAD EXCEL
+</a>
+
+<button
+    type="button"
+    class="clear-data-btn"
+    onclick="clearRegistrationData()">
+    🗑️ CLEAR TEST DATA
+</button>
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchTeam"
+                placeholder="Search by team name, college, department or member..."
+            >
+
+        </div>
+
+
+        <div class="teams-container" id="teamsContainer"></div>
+
+    </section>
+
+</main>
+
+
+<!-- IMAGE MODAL -->
+
+<div class="modal" id="imageModal">
+
+    <button class="close-modal" onclick="closeImage()">
+        ✕
+    </button>
+
+    <img id="modalImage" src="" alt="Payment Screenshot">
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   ADMIN LOGIN PROTECTION
+========================================================= */
+
+if(sessionStorage.getItem("hackfestAdminLoggedIn") !== "true"){
+
+    window.location.href = "/admin-login";
+
+}
+
+
+/* =========================================================
+   GET REGISTRATION DATA FROM FLASK + MYSQL
+========================================================= */
+
+let registrations = [];
+
+
+/* =========================================================
+   LOAD TEAMS
+========================================================= */
+
+async function loadTeams(){
+
+    try{
+
+        const response =
+            await fetch("/api/admin/teams");
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            console.error(
+                "API Error:",
+                data.message
+            );
+
+            registrations = [];
+
+            updateStats();
+            renderTeams();
+
+            return;
+        }
+
+
+        /* Convert MySQL data to dashboard format */
+
+        registrations =
+            data.teams.map(team => {
+
+                const payment =
+                    team.payment
+                    ?
+                    {
+                        amount: team.payment.amount,
+                        transactionId:
+                            team.payment.transaction_id,
+                        paymentStatus:
+                            team.payment.payment_status,
+                        screenshot:
+                            team.payment.screenshot,
+                        submittedAt:
+                            team.payment.submitted_at
+                    }
+                    :
+                    null;
+
+
+                return {
+
+                    id: team.id,
+
+                    teamName:
+                        team.team_name,
+
+                    collegeName:
+                        team.college_name,
+
+                    department:
+                        team.department,
+
+                    teamSize:
+                        team.team_size,
+
+                    createdAt:
+                        team.created_at,
+
+                    members:
+                        team.members || [],
+
+                    payment:
+                        payment
+
+                };
+
+            });
+
+
+        updateStats();
+        renderTeams();
+
+
+    }
+    catch(error){
+
+        console.error(
+            "Failed to load teams:",
+            error
+        );
+
+        registrations = [];
+
+        updateStats();
+        renderTeams();
+
+    }
+
+}
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+const teamsContainer =
+    document.getElementById("teamsContainer");
+
+const searchInput =
+    document.getElementById("searchTeam");
+
+
+/* =========================================================
+   UPDATE STATS
+========================================================= */
+
+function updateStats(){
+
+    let totalTeams = registrations.length;
+
+    let totalMembers = 0;
+
+    let totalAmount = 0;
+
+    let pending = 0;
+
+
+    registrations.forEach(team => {
+
+        totalMembers += Number(team.teamSize || 0);
+
+        totalAmount += Number(
+            team.payment?.amount ||
+            team.totalAmount ||
+            0
+        );
+
+        if(
+            !team.payment ||
+            team.payment.paymentStatus !== "Verified"
+        ){
+
+            pending++;
+
+        }
+
+    });
+
+
+    document.getElementById("totalTeams").textContent =
+        totalTeams;
+
+    document.getElementById("totalMembers").textContent =
+        totalMembers;
+
+    document.getElementById("totalAmount").textContent =
+        "₹" + totalAmount.toLocaleString("en-IN");
+
+    document.getElementById("pendingPayments").textContent =
+        pending;
+
+    document.getElementById("teamCountText").textContent =
+        totalTeams + (totalTeams === 1 ? " Team" : " Teams");
+
+}
+
+
+/* =========================================================
+   RENDER TEAMS
+========================================================= */
+
+function renderTeams(data = registrations){
+
+    teamsContainer.innerHTML = "";
+
+
+    if(data.length === 0){
+
+        teamsContainer.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    🔍
+                </div>
+
+                <h3>No Teams Found</h3>
+
+                <p>
+                    No registration matches your search.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    data.forEach((team,index) => {
+
+        const members = team.members || [];
+
+        const leader =
+            members.length > 0
+            ? members[0]
+            : null;
+
+
+        const amount =
+            team.payment?.amount ||
+            team.totalAmount ||
+            Number(team.teamSize || 0) * 200;
+
+
+        const transactionId =
+            team.payment?.transactionId ||
+            "Not Submitted";
+
+
+        const paymentStatus =
+            team.payment?.paymentStatus ||
+            "Payment Pending";
+
+
+        const screenshot =
+    team.payment?.screenshot
+    ?
+    "/payment-screenshot/" +
+    encodeURIComponent(team.payment.screenshot)
+    :
+    "";
+
+
+        const paymentActions =
+    team.payment
+    ?
+    team.payment.paymentStatus === "Verified"
+    ?
+    `
+        <div class="payment-actions">
+
+            <span class="verified-badge">
+                ✓ Payment Verified
+            </span>
+
+        </div>
+    `
+    :
+    team.payment.paymentStatus === "Rejected"
+    ?
+    `
+        <div class="payment-actions">
+
+            <span class="rejected-badge">
+                ✕ Payment Rejected
+            </span>
+
+        </div>
+    `
+    :
+    `
+        <div class="payment-actions">
+
+            <button
+                class="verify-btn"
+                onclick="updatePaymentStatus(${team.id}, 'Verified')">
+                ✓ Verify Payment
+            </button>
+
+            <button
+                class="reject-btn"
+                onclick="updatePaymentStatus(${team.id}, 'Rejected')">
+                ✕ Reject Payment
+            </button>
+
+        </div>
+    `
+    :
+    "";
+
+        const card = document.createElement("div");
+
+        card.className = "team-card";
+
+
+        /* MEMBERS TABLE */
+
+        let memberRows = "";
+
+
+        members.forEach((member,memberIndex) => {
+
+            memberRows += `
+
+                <tr>
+
+                    <td>
+                        ${memberIndex + 1}
+                    </td>
+
+                    <td>
+
+                        ${escapeHTML(member.name || "-")}
+
+                        ${
+                            memberIndex === 0
+                            ?
+                            '<span class="leader-badge">TEAM LEADER</span>'
+                            :
+                            ''
+                        }
+
+                    </td>
+
+                    <td>
+                        ${escapeHTML(member.email || "-")}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(member.phone || "-")}
+                    </td>
+
+                </tr>
+
+            `;
+
+        });
+
+
+        /* SCREENSHOT */
+
+        let screenshotHTML = "";
+
+
+        if(screenshot){
+
+            screenshotHTML = `
+
+                <img
+                    src="${screenshot}"
+                    alt="Payment Screenshot"
+                    onclick="openImage('${screenshot}')"
+                >
+
+                <small style="color:#687087;">
+                    Click image to enlarge
+                </small>
+
+            `;
+
+        }
+        else{
+
+            screenshotHTML = `
+
+                <div class="no-screenshot">
+
+                    📷<br><br>
+
+                    Payment screenshot not available.<br>
+                    Current payment page stores only the filename.
+
+                </div>
+
+            `;
+
+        }
+
+
+        card.innerHTML = `
+
+            <!-- TEAM HEADER -->
+
+            <div class="team-header">
+
+                <div class="team-main">
+
+                    <div class="team-number">
+                        #${index + 1}
+                    </div>
+
+                    <div class="team-info">
+
+                        <h3>
+                            ${escapeHTML(team.teamName || "Unnamed Team")}
+                        </h3>
+
+                        <p>
+                            ${escapeHTML(team.collegeName || "College not provided")}
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="payment-status">
+
+                    ${escapeHTML(paymentStatus)}
+
+                </div>
+                ${paymentActions}
+
+            </div>
+
+
+            <!-- TEAM BODY -->
+
+            <div class="team-body">
+
+
+                <!-- BASIC DETAILS -->
+
+                <div class="sub-heading">
+                    TEAM INFORMATION
+                </div>
+
+
+                <div class="details-grid">
+
+                    <div class="detail-box">
+
+                        <label>Team Name</label>
+
+                        <strong>
+                            ${escapeHTML(team.teamName || "-")}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-box">
+
+                        <label>College</label>
+
+                        <strong>
+                            ${escapeHTML(team.collegeName || "-")}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-box">
+
+                        <label>Department</label>
+
+                        <strong>
+                            ${escapeHTML(team.department || "-")}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-box">
+
+                        <label>Team Size</label>
+
+                        <strong>
+                            ${team.teamSize || 0} Members
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MEMBERS -->
+
+                <div class="sub-heading">
+                    MEMBERS DETAILS
+                </div>
+
+
+                <div class="members-table">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>#</th>
+
+                                <th>Member Name</th>
+
+                                <th>Email ID</th>
+
+                                <th>Phone Number</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            ${memberRows}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- PAYMENT -->
+
+                <div class="payment-section">
+
+                    <div class="sub-heading">
+                        PAYMENT DETAILS
+                    </div>
+
+
+                    <div class="payment-grid">
+
+
+                        <div class="payment-info">
+
+
+                            <div class="payment-row">
+
+                                <span>Amount Per Head</span>
+
+                                <strong>
+                                    ₹${team.amountPerHead || 200}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="payment-row">
+
+                                <span>Total Members</span>
+
+                                <strong>
+                                    ${team.teamSize || 0}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="payment-row">
+
+                                <span>Total Amount</span>
+
+                                <strong class="amount">
+                                    ₹${Number(amount).toLocaleString("en-IN")}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="payment-row">
+
+                                <span>Transaction ID</span>
+
+                                <strong>
+                                    ${escapeHTML(transactionId)}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="payment-row">
+
+                                <span>Payment Status</span>
+
+                                <strong>
+                                    ${escapeHTML(paymentStatus)}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="payment-row">
+
+                                <span>Submitted At</span>
+
+                                <strong>
+                                    ${
+                                        team.payment?.submittedAt
+                                        ?
+                                        new Date(
+                                            team.payment.submittedAt
+                                        ).toLocaleString("en-IN")
+                                        :
+                                        "Not available"
+                                    }
+                                </strong>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- SCREENSHOT -->
+
+                        <div class="screenshot-box">
+
+                            ${screenshotHTML}
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        `;
+
+
+        teamsContainer.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+searchInput.addEventListener("input", function(){
+
+    const query =
+        this.value.toLowerCase().trim();
+
+
+    const filtered =
+        registrations.filter(team => {
+
+            const teamText = [
+
+                team.teamName,
+                team.collegeName,
+                team.department,
+
+                ...(team.members || []).map(member =>
+                    `${member.name} ${member.email} ${member.phone}`
+                )
+
+            ]
+            .join(" ")
+            .toLowerCase();
+
+
+            return teamText.includes(query);
+
+        });
+
+
+    renderTeams(filtered);
+
+});
+
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+async function updatePaymentStatus(teamId, status){
+
+    const action =
+        status === "Verified"
+        ? "verify"
+        : "reject";
+
+    const confirmAction =
+        confirm(
+            `Are you sure you want to ${action} this payment?`
+        );
+
+    if(!confirmAction){
+        return;
+    }
+
+    try{
+
+        const response = await fetch(
+            "/api/admin/payment-status",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    team_id: teamId,
+                    status: status
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if(!data.success){
+
+            alert(
+                data.message ||
+                "Failed to update payment status."
+            );
+
+            return;
+        }
+
+        alert(
+            status === "Verified"
+            ? "Payment verified successfully!"
+            : "Payment rejected successfully!"
+        );
+
+        await loadTeams();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "Something went wrong while updating payment."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   IMAGE MODAL
+========================================================= */
+
+function openImage(src){
+
+    document.getElementById("modalImage").src = src;
+
+    document
+        .getElementById("imageModal")
+        .classList.add("active");
+
+}
+
+
+function closeImage(){
+
+    document
+        .getElementById("imageModal")
+        .classList.remove("active");
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+function logout(){
+
+    sessionStorage.removeItem(
+        "hackfestAdminLoggedIn"
+    );
+
+    window.location.href =
+    "/admin-login";
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+loadTeams();
+
+
+/* =========================================================
+   ESCAPE MODAL
+========================================================= */
+
+document.addEventListener("keydown",function(e){
+
+    if(e.key === "Escape"){
+
+        closeImage();
+
+    }
+
+});
+
+
+
+async function clearRegistrationData() {
+
+    const confirmDelete = confirm(
+        "WARNING!\n\n" +
+        "All teams, members and payment records will be permanently deleted.\n\n" +
+        "Are you sure?"
+    );
+
+    if (!confirmDelete) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            "/api/admin/clear-data",
+            {
+                method: "POST"
+            }
+        );
+
+        const result = await response.json();
+
+        if (result.success) {
+
+            alert("All test data cleared successfully.");
+
+            location.reload();
+
+        } else {
+
+            alert("Failed: " + result.message);
+        }
+
+    } catch (error) {
+
+        alert("Server Error: " + error.message);
+    }
+}
+</script>
+
+</body>
+</html>

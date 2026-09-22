@@ -1,0 +1,860 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HACKFEST | Payment</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    min-height:100vh;
+    color:#fff;
+    background:
+        radial-gradient(circle at 10% 20%,rgba(0,234,255,.14),transparent 30%),
+        radial-gradient(circle at 90% 25%,rgba(155,92,255,.16),transparent 30%),
+        radial-gradient(circle at 50% 100%,rgba(255,60,172,.12),transparent 35%),
+        #050816;
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.23;
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:50px 50px;
+}
+
+.orb{
+    position:fixed;
+    border-radius:50%;
+    filter:blur(80px);
+    pointer-events:none;
+    animation:float 8s ease-in-out infinite;
+}
+
+.orb1{
+    width:250px;
+    height:250px;
+    background:#00eaff;
+    opacity:.12;
+    left:-100px;
+    top:10%;
+}
+
+.orb2{
+    width:300px;
+    height:300px;
+    background:#9b5cff;
+    opacity:.12;
+    right:-120px;
+    top:35%;
+    animation-delay:2s;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-30px)}
+}
+
+nav{
+    height:75px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 6%;
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(5,8,22,.75);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo-mark{
+    width:42px;
+    height:42px;
+    border:1px solid rgba(0,234,255,.6);
+    border-radius:12px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#00eaff;
+    font-weight:900;
+}
+
+.logo-text strong{
+    display:block;
+    letter-spacing:2px;
+}
+
+.logo-text span{
+    color:#8e98b5;
+    font-size:10px;
+    letter-spacing:1.5px;
+}
+
+.back{
+    text-decoration:none;
+    color:#fff;
+    border:1px solid rgba(255,255,255,.12);
+    padding:10px 18px;
+    border-radius:10px;
+    font-size:13px;
+}
+
+.back:hover{
+    color:#00eaff;
+    border-color:#00eaff;
+}
+
+.container{
+    width:min(900px,92%);
+    margin:50px auto 80px;
+}
+
+.heading{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.badge{
+    display:inline-block;
+    padding:8px 16px;
+    border-radius:50px;
+    border:1px solid rgba(0,234,255,.35);
+    color:#00eaff;
+    font-size:11px;
+    letter-spacing:2px;
+    margin-bottom:18px;
+}
+
+.heading h1{
+    font-size:clamp(40px,7vw,70px);
+    letter-spacing:5px;
+    background:linear-gradient(90deg,#00eaff,#9b5cff,#ff3cac);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.heading p{
+    color:#aab3cc;
+    margin-top:12px;
+}
+
+.payment-card{
+    padding:32px;
+    border-radius:24px;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.045);
+    backdrop-filter:blur(20px);
+    box-shadow:0 30px 80px rgba(0,0,0,.35);
+}
+
+.amount-box{
+    text-align:center;
+    padding:30px;
+    margin-bottom:30px;
+    border-radius:20px;
+    background:
+        linear-gradient(135deg,
+        rgba(0,234,255,.09),
+        rgba(155,92,255,.09));
+    border:1px solid rgba(0,234,255,.2);
+}
+
+.amount-box .small{
+    color:#9ba5c1;
+    font-size:12px;
+    letter-spacing:2px;
+}
+
+.amount{
+    font-size:52px;
+    font-weight:900;
+    margin:8px 0;
+    background:linear-gradient(90deg,#00eaff,#fff,#9b5cff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.calculation{
+    color:#aeb7d0;
+    font-size:13px;
+}
+
+.section{
+    margin-bottom:28px;
+}
+
+.section-title{
+    font-size:20px;
+    margin-bottom:18px;
+}
+
+.team-summary{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.summary-item{
+    padding:16px;
+    border-radius:12px;
+    background:rgba(0,0,0,.2);
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.summary-item span{
+    display:block;
+    color:#7f89a7;
+    font-size:10px;
+    letter-spacing:1px;
+    margin-bottom:6px;
+}
+
+.summary-item strong{
+    font-size:14px;
+}
+
+.bank-box{
+    padding:24px;
+    border-radius:18px;
+    background:rgba(0,0,0,.2);
+    border:1px solid rgba(255,255,255,.09);
+}
+
+.bank-row{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    padding:14px 0;
+    border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.bank-row:last-child{
+    border-bottom:0;
+}
+
+.bank-row span{
+    color:#8791ae;
+    font-size:12px;
+}
+
+.bank-row strong{
+    text-align:right;
+    font-size:14px;
+    word-break:break-all;
+}
+
+.notice{
+    margin-top:15px;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid rgba(255,193,7,.2);
+    background:rgba(255,193,7,.05);
+    color:#c6cce0;
+    font-size:12px;
+    line-height:1.6;
+}
+
+.field{
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    font-size:12px;
+    color:#b9c1da;
+    margin-bottom:9px;
+    letter-spacing:.5px;
+}
+
+input[type="text"],
+input[type="file"]{
+    width:100%;
+    padding:15px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,.12);
+    outline:none;
+    color:#fff;
+    background:rgba(0,0,0,.25);
+}
+
+input[type="text"]:focus{
+    border-color:#00eaff;
+    box-shadow:0 0 20px rgba(0,234,255,.08);
+}
+
+input[type="file"]{
+    cursor:pointer;
+}
+
+.file-info{
+    color:#7f89a7;
+    font-size:11px;
+    margin-top:8px;
+}
+
+.submit-btn{
+    width:100%;
+    padding:17px;
+    border:0;
+    border-radius:13px;
+    cursor:pointer;
+    font-weight:900;
+    letter-spacing:1px;
+    color:#041018;
+    background:linear-gradient(90deg,#00eaff,#8b7cff);
+    box-shadow:0 12px 35px rgba(0,234,255,.2);
+    transition:.3s;
+}
+
+.submit-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 18px 40px rgba(0,234,255,.3);
+}
+
+.small-note{
+    text-align:center;
+    color:#727c99;
+    font-size:11px;
+    margin-top:15px;
+}
+
+.success{
+    display:none;
+    text-align:center;
+    padding:30px 10px;
+}
+
+.success-icon{
+    width:75px;
+    height:75px;
+    margin:auto;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:35px;
+    color:#00eaff;
+    border:2px solid #00eaff;
+    box-shadow:0 0 30px rgba(0,234,255,.25);
+}
+
+.success h2{
+    margin-top:20px;
+    font-size:30px;
+}
+
+.success p{
+    color:#aab3cc;
+    margin-top:10px;
+    line-height:1.7;
+}
+
+@media(max-width:650px){
+
+    nav{
+        padding:0 4%;
+    }
+
+    .back{
+        padding:8px 11px;
+        font-size:11px;
+    }
+
+    .payment-card{
+        padding:20px;
+    }
+
+    .team-summary{
+        grid-template-columns:1fr;
+    }
+
+    .bank-row{
+        flex-direction:column;
+        gap:6px;
+    }
+
+    .bank-row strong{
+        text-align:left;
+    }
+
+    .amount{
+        font-size:43px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<nav>
+
+    <div class="logo">
+
+        <div class="logo-mark">HF</div>
+
+        <div class="logo-text">
+            <strong>HACKFEST</strong>
+            <span>24 HR HACKATHON</span>
+        </div>
+
+    </div>
+
+   <a href="/register" class="back">← BACK</a>
+
+</nav>
+
+
+<main class="container">
+
+    <div class="heading">
+
+        <div class="badge">FINAL STEP</div>
+
+        <h1>PAYMENT</h1>
+
+        <p>
+            Complete the payment and submit your transaction details.
+        </p>
+
+    </div>
+
+
+    <div class="payment-card" id="paymentSection">
+
+
+        <!-- TOTAL AMOUNT -->
+
+        <div class="amount-box">
+
+            <div class="small">TOTAL REGISTRATION FEE</div>
+
+            <div class="amount" id="totalAmount">
+                ₹0
+            </div>
+
+            <div class="calculation" id="calculation">
+                ₹200 × 0 Members
+            </div>
+
+        </div>
+
+
+        <!-- TEAM SUMMARY -->
+
+        <div class="section">
+
+            <div class="section-title">
+                Team Summary
+            </div>
+
+            <div class="team-summary">
+
+                <div class="summary-item">
+                    <span>TEAM NAME</span>
+                    <strong id="displayTeamName">-</strong>
+                </div>
+
+                <div class="summary-item">
+                    <span>COLLEGE</span>
+                    <strong id="displayCollege">-</strong>
+                </div>
+
+                <div class="summary-item">
+                    <span>DEPARTMENT</span>
+                    <strong id="displayDepartment">-</strong>
+                </div>
+
+                <div class="summary-item">
+                    <span>TEAM SIZE</span>
+                    <strong id="displayTeamSize">-</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BANK DETAILS -->
+
+        <div class="section">
+
+            <div class="section-title">
+                Bank Payment Details
+            </div>
+
+            <div class="bank-box">
+
+                <!-- SAMPLE DETAILS -->
+                <!-- Replace these with actual HACKFEST bank details -->
+
+                <div class="bank-row">
+                    <span>Bank Name</span>
+                    <strong>IOB</strong>
+                </div>
+
+                <div class="bank-row">
+                    <span>Branch</span>
+                    <strong>ODATHURAI</strong>
+                </div>
+
+               
+
+                <div class="bank-row">
+                    <span>Account Number</span>
+                    <strong>106602000000645</strong>
+                </div>
+
+                <div class="bank-row">
+                    <span>IFSC Code</span>
+                    <strong>IOBA0001066</strong>
+                </div>
+
+            </div>
+
+            <div class="notice">
+                ⚠ These are sample bank details for development.
+                Replace them with the official HACKFEST bank account
+                details before publishing the website.
+            </div>
+
+        </div>
+
+
+        <!-- PAYMENT PROOF -->
+
+        <div class="section">
+
+            <div class="section-title">
+                Payment Verification
+            </div>
+
+
+            <div class="field">
+
+                <label>PAYMENT SCREENSHOT *</label>
+
+                <input
+                    type="file"
+                    id="paymentScreenshot"
+                    accept="image/png,image/jpeg,image/jpg"
+                >
+
+                <div class="file-info">
+                    Upload a clear screenshot of your successful payment.
+                </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>TRANSACTION ID *</label>
+
+                <input
+                    type="text"
+                    id="transactionId"
+                    placeholder="Enter your payment transaction ID"
+                >
+
+            </div>
+
+        </div>
+
+
+        <button class="submit-btn" id="submitPayment">
+            SUBMIT REGISTRATION →
+        </button>
+
+        <div class="small-note">
+            Payment screenshot and transaction ID are mandatory.
+        </div>
+
+    </div>
+
+
+    <!-- SUCCESS -->
+
+    <div class="payment-card success" id="successSection">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <h2>Registration Submitted</h2>
+
+        <p>
+            Your HACKFEST registration details have been submitted
+            successfully.
+            <br><br>
+            Your payment details will be verified by the HACKFEST team.
+        </p>
+
+    </div>
+
+</main>
+
+
+<script>
+
+const registrationData =
+    JSON.parse(
+        sessionStorage.getItem("hackfestRegistrationData")
+    );
+
+const teamId =
+    sessionStorage.getItem("hackfestTeamId");
+
+
+/* =========================================================
+   CHECK REGISTRATION DATA
+========================================================= */
+
+if (!registrationData || !teamId) {
+
+    alert("Registration details not found. Please complete registration first.");
+
+    window.location.href = "/register";
+
+}
+
+
+/* =========================================================
+   DISPLAY TEAM INFORMATION
+========================================================= */
+
+if (registrationData && teamId) {
+
+    const size = Number(registrationData.teamSize);
+
+    const amountPerHead = 200;
+
+    const totalAmount = size * amountPerHead;
+
+
+    document.getElementById("displayTeamName").textContent =
+        registrationData.teamName;
+
+    document.getElementById("displayCollege").textContent =
+        registrationData.collegeName;
+
+    document.getElementById("displayDepartment").textContent =
+        registrationData.department;
+
+    document.getElementById("displayTeamSize").textContent =
+        size + " Members";
+
+
+    document.getElementById("totalAmount").textContent =
+        "₹" + totalAmount.toLocaleString("en-IN");
+
+
+    document.getElementById("calculation").textContent =
+        "₹" + amountPerHead + " × " + size +
+        " Members = ₹" +
+        totalAmount.toLocaleString("en-IN");
+
+}
+
+
+/* =========================================================
+   SUBMIT PAYMENT
+========================================================= */
+
+document.getElementById("submitPayment")
+.addEventListener("click", async function () {
+
+    const screenshot =
+        document.getElementById("paymentScreenshot").files[0];
+
+    const transactionId =
+        document.getElementById("transactionId").value.trim();
+
+
+    /* SCREENSHOT VALIDATION */
+
+    if (!screenshot) {
+
+        alert("Please upload your payment screenshot.");
+
+        return;
+
+    }
+
+
+    /* FILE TYPE VALIDATION */
+
+    const allowedTypes = [
+        "image/jpeg",
+        "image/jpg",
+        "image/png"
+    ];
+
+
+    if (!allowedTypes.includes(screenshot.type)) {
+
+        alert("Please upload only JPG, JPEG or PNG image.");
+
+        return;
+
+    }
+
+
+    /* TRANSACTION ID VALIDATION */
+
+    if (!transactionId) {
+
+        alert("Please enter your transaction ID.");
+
+        return;
+
+    }
+
+
+    if (transactionId.length < 4) {
+
+        alert("Please enter a valid transaction ID.");
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       CREATE FORM DATA
+    ===================================================== */
+
+    const formData = new FormData();
+
+    formData.append("team_id", teamId);
+
+    formData.append(
+        "transaction_id",
+        transactionId
+    );
+
+    formData.append(
+        "screenshot",
+        screenshot
+    );
+
+
+    /* =====================================================
+       BUTTON LOADING
+    ===================================================== */
+
+    const button =
+        document.getElementById("submitPayment");
+
+    button.disabled = true;
+
+    button.textContent =
+        "SUBMITTING PAYMENT...";
+
+
+    try {
+
+        const response = await fetch(
+            "/api/payment",
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+
+        const result =
+            await response.json();
+
+
+        if (!result.success) {
+
+            alert(
+                result.message ||
+                "Payment submission failed."
+            );
+
+            button.disabled = false;
+
+            button.textContent =
+                "SUBMIT REGISTRATION →";
+
+            return;
+
+        }
+
+
+        /* =================================================
+           PAYMENT SUCCESS
+        ================================================= */
+
+        document.getElementById(
+            "paymentSection"
+        ).style.display = "none";
+
+
+        document.getElementById(
+            "successSection"
+        ).style.display = "block";
+
+
+        /* Save payment status locally for current browser */
+
+        sessionStorage.setItem(
+            "hackfestPaymentStatus",
+            "Pending Verification"
+        );
+
+
+        console.log(
+            "Payment saved successfully:",
+            result
+        );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Server connection failed. Please try again."
+        );
+
+
+        button.disabled = false;
+
+        button.textContent =
+            "SUBMIT REGISTRATION →";
+
+    }
+
+});
+
+</script>
+</body>
+</html>
